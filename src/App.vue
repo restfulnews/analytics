@@ -2,7 +2,7 @@
   <div id="app">
     <md-app md-waterfall md-mode="fixed">
       <md-app-drawer class="md-elevation-4" md-permanent="full">
-        <md-toolbar class="md-transparent" md-elevation="0">
+        <md-toolbar class="md-transparent site-title-container" md-elevation="0">
           <h2 class="site-title">{RN}</h2>
         </md-toolbar>
         <md-list class="main-navbar">
@@ -45,6 +45,12 @@ export default {
 </script>
 
 <style>
+.site-title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .site-title {
   font-weight: bold;
   font-size: 1.6em;
@@ -52,6 +58,12 @@ export default {
   background-color: #33a1e0;
   border-radius: 10%;
   padding: 0.3em;
+}
+.nav-item {
+  color: white;
+}
+.nav-item:hover {
+  background-color: lightgrey;
 }
 .md-app {
   border: 1px solid rgba(#000, .12);
@@ -77,6 +89,7 @@ export default {
   display: inline-flex;
   align-items: flex-end;
   overflow: hidden;
+  background-color: white;
 }
 /* Desktop Navbar */
 .main-navbar .nav-item {
@@ -95,8 +108,6 @@ export default {
 }
 .main-navbar .nav-item .nav-icon {
   text-align: center;
-}
-.md-datepicker-dialog {
-  background-color: white;
+  color: #33a1e0;
 }
 </style>

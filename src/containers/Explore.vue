@@ -14,13 +14,13 @@
           v-model="keywords"
           md-insert="updateKeywords"
           md-check-duplicated="true"
-          md-placeholder="Type a keyword... (eg. bananas) then press enter."
+          md-placeholder="Enter a keyword"
         />
         <md-chips
           v-model="tickers"
           md-insert="updateTickers"
           md-check-duplicated="true"
-          md-placeholder="Type a company ticker... (eg. WOW.AX) then press enter."
+          md-placeholder="Enter a company ticker."
         />
         <md-button
           class="md-raised md-primary search-btn"
@@ -100,10 +100,6 @@ export default {
 .empty-state {
   background-color: rgb(240, 240, 240);
   margin-top: 20%;
-}
-.search-btn {
-  background: #33a1e0;
-  color: white;
 }
 .chips {
   display: inline;
