@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import FeatureUnavailable from '@/components/FeatureUnavailable';
 
 export default {
@@ -42,6 +43,12 @@ export default {
     searchResults() {
       return this.$store.state.searchResults;
     },
+  },
+  methods: mapActions([
+    'updateTitle',
+  ]),
+  mounted() {
+    this.updateTitle('RN Analytics');
   },
 };
 </script>

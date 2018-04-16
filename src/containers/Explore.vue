@@ -29,6 +29,8 @@
           Search News
         </md-button>
       </md-card>
+      <md-progress-bar class="loading" md-mode="indeterminate"
+        v-if="searchStatus == 'fetching'"/>
       <news-card
         v-for="result in results"
         v-bind:key="result.fingerprint"
@@ -40,13 +42,7 @@
       />
     </div>
     <div class="column is-main-content is-hidden-mobile">
-      <md-empty-state
-        class="empty-state"
-        md-rounded
-        md-icon="chrome_reader_mode"
-        md-label="Article View"
-        md-description="Click on the article to view its contents.">
-      </md-empty-state>
+      <feature-unavailable />
     </div>
   </div>
 </template>
@@ -54,11 +50,13 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import NewsCard from '@/components/NewsCard';
+import FeatureUnavailable from '@/components/FeatureUnavailable';
 
 export default {
   name: 'Explore',
   components: {
     'news-card': NewsCard,
+    'feature-unavailable': FeatureUnavailable,
   },
   computed: {
     ...mapGetters([
@@ -67,6 +65,7 @@ export default {
       'keywords',
       'tickers',
       'results',
+      'searchStatus',
     ]),
   },
   methods: mapActions([
@@ -75,14 +74,18 @@ export default {
     'updateKeywords',
     'updateTickers',
     'updateResults',
+    'updateTitle',
   ]),
+  mounted() {
+    this.updateTitle('Explore');
+  },
 };
 </script>
 
 <style scoped>
 .columns.is-fullheight {
-  min-height: calc(100vh - ( 3.25rem - .75rem ));
-  max-height: calc(100vh - ( 3.25rem - .75rem ));
+  min-height: calc(96vh - ( 3.25rem - .75rem ));
+  max-height: calc(96vh - ( 3.25rem - .75rem ));
   display: flex;
   flex-direction: row;
   justify-content: stretch;
@@ -104,5 +107,10 @@ export default {
 .chips {
   display: inline;
   padding-bottom: .4em;
+}
+.loading {
+  text-align: center;
+  width: 90%;
+  margin: 25px;
 }
 </style>

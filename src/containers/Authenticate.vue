@@ -1,4 +1,7 @@
 <template>
+  <div id="Authenticate">
+
+  </div>
 </template>
 
 <script>

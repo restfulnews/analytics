@@ -27,7 +27,7 @@ const actions = {
     commit('setStartTime', time);
   },
   updateEndTime({ commit }, time) {
-    commit('updateEndTime', time);
+    commit('setEndTime', time);
   },
   updateKeywords({ commit }, keywords) {
     commit('setKeywords', keywords);
@@ -42,13 +42,14 @@ const actions = {
     const keywords = state.keywords.join();
     const url = `http://api.restfulnews.com/search?topics=${keywords}&start_date=${startTime}&end_date=${endTime}&companyids=${tickers}`;
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhYmQ0ZWI2MTVhZmJkNjRiZDIzNDRjYyIsImlhdCI6MTUyMzc5MDQ2OX0.qleqkrk58vmsEHx5AU1Uugf66tmmzZI6VAzCZ9_VKbs';
+    commit('setSearchStatus', 'fetching');
     axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
       .then((response) => {
-        commit('setSearchStatus', response.status);
         commit('setResults', response.data.data);
+        commit('setSearchStatus', 'fetched');
       })
       .catch((error) => {
-        commit('setSearchStatus', error.status);
+        commit('setSearchStatus', `failed: ${error.status}`);
       });
   },
 };
