@@ -16,27 +16,25 @@
         </div>
         <md-chips
           v-model="keywords"
-          md-insert="updateKeywords"
           md-check-duplicated="true"
           md-placeholder="Enter a keyword"
         />
         <md-chips
           v-model="tickers"
-          md-insert="updateTickers"
           md-check-duplicated="true"
           md-placeholder="Enter a company ticker."
         />
         <md-button
           class="md-raised md-primary search-btn"
-          @click="updateResults()"
+          @click="updateSearchResults()"
         >
           Search News
         </md-button>
       </md-card>
       <md-progress-bar class="loading" md-mode="indeterminate"
-        v-if="searchStatus == 'fetching'"/>
+        v-if="getSearchStatus == 'fetching'"/>
       <news-card
-        v-for="result in results"
+        v-for="result in getSearchResults"
         v-bind:key="result.fingerprint"
         v-bind:thumbnail="result.thumbnail"
         v-bind:abstract="result.abstract"
@@ -64,22 +62,52 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getSearchStartTime',
-      'getSearchEndTime',
-      'getSearchKeywords',
-      'getSearchTickers',
       'getSearchResults',
       'getSearchStatus',
     ]),
+    startTime: {
+      get() {
+        return this.$store.state.search.startTime;
+      },
+      set(val) {
+        this.$store.commit('setSearchStartTime', val);
+      },
+    },
+    endTime: {
+      get() {
+        return this.$store.state.search.endTime;
+      },
+      set(val) {
+        this.$store.commit('setSearchEndTime', val);
+      },
+    },
+    keywords: {
+      get() {
+        return this.$store.state.search.keywords;
+      },
+      set(val) {
+        this.$store.commit('setSearchKeywords', val);
+      },
+    },
+    tickers: {
+      get() {
+        return this.$store.state.search.tickers;
+      },
+      set(val) {
+        this.$store.commit('setSearchTickers', val);
+      },
+    },
   },
-  methods: mapActions([
-    'updateSearchStartTime',
-    'updateSearchEndTime',
-    'updateSearchKeywords',
-    'updateSearchTickers',
-    'updateSearchResults',
-    'updateAppTitle',
-  ]),
+  methods: {
+    ...mapActions([
+      'updateSearchStartTime',
+      'updateSearchEndTime',
+      'updateSearchKeywords',
+      'updateSearchTickers',
+      'updateSearchResults',
+      'updateAppTitle',
+    ]),
+  },
   mounted() {
     this.updateAppTitle('Explore');
   },

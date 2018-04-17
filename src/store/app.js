@@ -4,10 +4,6 @@ const state = {
   title: 'RN Analytics',
 };
 
-const getters = {
-  getAppTitle: state => state.title,
-};
-
 const actions = {
   updateAppTitle({ commit }, title) {
     commit('setAppTitle', title);
@@ -20,9 +16,13 @@ const mutations = {
   },
 };
 
+const getters = {
+  getAppTitle: state => state.title,
+};
+
 export default {
   state,
-  getters,
   actions,
   mutations,
+  getters,
 };

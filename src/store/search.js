@@ -10,15 +10,6 @@ const state = {
   status: null,
 };
 
-const getters = {
-  getSearchStartTime: state => state.startTime,
-  getSearchEndTime: state => state.endTime,
-  getSearchKeywords: state => state.keywords,
-  getSearchTickers: state => state.tickers,
-  getSearchResults: state => state.results,
-  getSearchStatus: state => state.status,
-};
-
 const actions = {
   updateSearchStartTime({ commit }, time) {
     commit('setSearchStartTime', time);
@@ -68,13 +59,22 @@ const mutations = {
     state.results = results;
   },
   setSearchStatus(state, status) {
-    state.searchStatus = status;
+    state.status = status;
   },
+};
+
+const getters = {
+  getSearchStartTime: state => state.startTime,
+  getSearchEndTime: state => state.endTime,
+  getSearchKeywords: state => state.keywords,
+  getSearchTickers: state => state.tickers,
+  getSearchResults: state => state.results,
+  getSearchStatus: state => state.status,
 };
 
 export default {
   state,
-  getters,
   actions,
   mutations,
+  getters,
 };
