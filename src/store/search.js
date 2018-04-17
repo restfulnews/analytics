@@ -28,7 +28,7 @@ const actions = {
     const endTime = state.endTime.toISOString();
     const tickers = state.tickers.join();
     const keywords = state.keywords.join();
-    const url = `http://api.restfulnews.com/search?topics=${keywords}&start_date=${startTime}&end_date=${endTime}&companyids=${tickers}`;
+    const url = `${process.env.API_URI}/search?topics=${keywords}&start_date=${startTime}&end_date=${endTime}&companyids=${tickers}`;
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhYmQ0ZWI2MTVhZmJkNjRiZDIzNDRjYyIsImlhdCI6MTUyMzc5MDQ2OX0.qleqkrk58vmsEHx5AU1Uugf66tmmzZI6VAzCZ9_VKbs';
     commit('setSearchStatus', 'fetching');
     axios.get(url, { headers: { Authorization: `Bearer ${token}` } })

@@ -66,36 +66,20 @@ export default {
       'getSearchStatus',
     ]),
     startTime: {
-      get() {
-        return this.$store.state.search.startTime;
-      },
-      set(val) {
-        this.$store.commit('setSearchStartTime', val);
-      },
+      get() { return this.$store.state.search.startTime; },
+      set(val) { this.updateSearchStartTime(val); },
     },
     endTime: {
-      get() {
-        return this.$store.state.search.endTime;
-      },
-      set(val) {
-        this.$store.commit('setSearchEndTime', val);
-      },
+      get() { return this.$store.state.search.endTime; },
+      set(val) { this.updateSearchEndTime(val); },
     },
     keywords: {
-      get() {
-        return this.$store.state.search.keywords;
-      },
-      set(val) {
-        this.$store.commit('setSearchKeywords', val);
-      },
+      get() { return this.$store.state.search.keywords; },
+      set(val) { this.updateSearchKeywords(val); },
     },
     tickers: {
-      get() {
-        return this.$store.state.search.tickers;
-      },
-      set(val) {
-        this.$store.commit('setSearchTickers', val);
-      },
+      get() { return this.$store.state.search.tickers; },
+      set(val) { this.updateSearchTickers(val); },
     },
   },
   methods: {

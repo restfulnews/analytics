@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <md-app md-waterfall md-mode="fixed">
-      <md-app-toolbar class="md-primary">
+      <md-app-toolbar class="md-primary site-toolbar">
         <span class="md-title">{{getAppTitle}}</span>
       </md-app-toolbar>
       <md-app-drawer class="md-elevation-4" md-permanent="full">
@@ -88,6 +88,12 @@ export default {
 @media (min-width: 600px) {
   .phone-viewport {
     display: none !important;
+  }
+}
+/* Mobile toolbar */
+@media only screen and (max-width: 600px) {
+  .site-toolbar {
+    display: none;
   }
 }
 .phone-viewport {
