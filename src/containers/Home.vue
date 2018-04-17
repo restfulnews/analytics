@@ -45,10 +45,10 @@ export default {
     },
   },
   methods: mapActions([
-    'updateTitle',
+    'updateAppTitle',
   ]),
   mounted() {
-    this.updateTitle('RN Analytics');
+    this.updateAppTitle('RN Analytics');
   },
 };
 </script>

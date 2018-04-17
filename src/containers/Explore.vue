@@ -4,10 +4,14 @@
       <md-card class="news-search">
         <div class="md-layout">
           <div class="md-layout-item">
-            <md-datepicker v-model="startTime"><label>Start time</label></md-datepicker>
+            <md-datepicker v-model="startTime">
+              <label>Start time</label>
+            </md-datepicker>
           </div>
           <div class="md-layout-item">
-            <md-datepicker v-model="endTime"><label>End time</label></md-datepicker>
+            <md-datepicker v-model="endTime">
+              <label>End time</label>
+            </md-datepicker>
           </div>
         </div>
         <md-chips
@@ -60,24 +64,24 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'startTime',
-      'endTime',
-      'keywords',
-      'tickers',
-      'results',
-      'searchStatus',
+      'getSearchStartTime',
+      'getSearchEndTime',
+      'getSearchKeywords',
+      'getSearchTickers',
+      'getSearchResults',
+      'getSearchStatus',
     ]),
   },
   methods: mapActions([
-    'updateStartTime',
-    'updateEndTime',
-    'updateKeywords',
-    'updateTickers',
-    'updateResults',
-    'updateTitle',
+    'updateSearchStartTime',
+    'updateSearchEndTime',
+    'updateSearchKeywords',
+    'updateSearchTickers',
+    'updateSearchResults',
+    'updateAppTitle',
   ]),
   mounted() {
-    this.updateTitle('Explore');
+    this.updateAppTitle('Explore');
   },
 };
 </script>

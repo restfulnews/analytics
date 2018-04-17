@@ -2,7 +2,7 @@
   <div id="app">
     <md-app md-waterfall md-mode="fixed">
       <md-app-toolbar class="md-primary">
-        <span class="md-title">{{title}}</span>
+        <span class="md-title">{{getAppTitle}}</span>
       </md-app-toolbar>
       <md-app-drawer class="md-elevation-4" md-permanent="full">
         <md-toolbar class="md-transparent site-title-container" md-elevation="0">
@@ -40,7 +40,7 @@ export default {
   name: 'App',
   computed: {
     ...mapGetters([
-      'title',
+      'getAppTitle',
     ]),
   },
   data: () => ({

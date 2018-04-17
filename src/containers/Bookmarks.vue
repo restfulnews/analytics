@@ -12,10 +12,10 @@ export default {
     'feature-unavailable': FeatureUnavailable,
   },
   methods: mapActions([
-    'updateTitle',
+    'updateAppTitle',
   ]),
   mounted() {
-    this.updateTitle('Bookmarks');
+    this.updateAppTitle('Bookmarks');
   },
 };
 </script>

@@ -1,25 +1,21 @@
 /* eslint-disable no-shadow */
 
-// initial state
 const state = {
   title: 'RN Analytics',
 };
 
-// getters
 const getters = {
-  title: state => state.title,
+  getAppTitle: state => state.title,
 };
 
-// actions
 const actions = {
-  updateTitle({ commit }, title) {
-    commit('setTitle', title);
+  updateAppTitle({ commit }, title) {
+    commit('setAppTitle', title);
   },
 };
 
-// mutations
 const mutations = {
-  setTitle(state, title) {
+  setAppTitle(state, title) {
     state.title = title;
   },
 };

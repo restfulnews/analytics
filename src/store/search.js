@@ -1,41 +1,38 @@
 /* eslint-disable no-shadow */
 import axios from 'axios';
 
-// initial state
 const state = {
   startTime: new Date(new Date().setFullYear(new Date().getFullYear() - 5)),
   endTime: new Date(),
   keywords: ['australia'],
   tickers: ['woolworths'],
   results: [],
-  searchStatus: null,
+  status: null,
 };
 
-// getters
 const getters = {
-  startTime: state => state.startTime,
-  endTime: state => state.endTime,
-  keywords: state => state.keywords,
-  tickers: state => state.tickers,
-  results: state => state.results,
-  searchStatus: state => state.searchStatus,
+  getSearchStartTime: state => state.startTime,
+  getSearchEndTime: state => state.endTime,
+  getSearchKeywords: state => state.keywords,
+  getSearchTickers: state => state.tickers,
+  getSearchResults: state => state.results,
+  getSearchStatus: state => state.status,
 };
 
-// actions
 const actions = {
-  updateStartTime({ commit }, time) {
-    commit('setStartTime', time);
+  updateSearchStartTime({ commit }, time) {
+    commit('setSearchStartTime', time);
   },
-  updateEndTime({ commit }, time) {
-    commit('setEndTime', time);
+  updateSearchEndTime({ commit }, time) {
+    commit('setSearchEndTime', time);
   },
-  updateKeywords({ commit }, keywords) {
-    commit('setKeywords', keywords);
+  updateSearchKeywords({ commit }, keywords) {
+    commit('setSearchKeywords', keywords);
   },
-  updateTickers({ commit }, tickers) {
-    commit('setTickers', tickers);
+  updateSearchTickers({ commit }, tickers) {
+    commit('setSearchTickers', tickers);
   },
-  updateResults({ commit, state }) {
+  updateSearchResults({ commit, state }) {
     const startTime = state.startTime.toISOString();
     const endTime = state.endTime.toISOString();
     const tickers = state.tickers.join();
@@ -45,7 +42,7 @@ const actions = {
     commit('setSearchStatus', 'fetching');
     axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
       .then((response) => {
-        commit('setResults', response.data.data);
+        commit('setSearchResults', response.data.data);
         commit('setSearchStatus', 'fetched');
       })
       .catch((error) => {
@@ -54,21 +51,20 @@ const actions = {
   },
 };
 
-// mutations
 const mutations = {
-  setStartTime(state, time) {
+  setSearchStartTime(state, time) {
     state.startTime = time;
   },
-  setEndTime(state, time) {
+  setSearchEndTime(state, time) {
     state.endTime = time;
   },
-  setKeywords(state, keywords) {
+  setSearchKeywords(state, keywords) {
     state.keywords = keywords;
   },
-  setTickers(state, tickers) {
+  setSearchTickers(state, tickers) {
     state.tickers = tickers;
   },
-  setResults(state, results) {
+  setSearchResults(state, results) {
     state.results = results;
   },
   setSearchStatus(state, status) {
