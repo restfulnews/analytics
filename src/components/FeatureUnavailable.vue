@@ -3,7 +3,7 @@
     class="empty-state"
     md-rounded
     md-icon="not_interested"
-    md-label="Feature Unavailable"
+    md-label="Coming soon..."
     md-description="RN developers are currently working on this feature.">
   </md-empty-state>
 </template>

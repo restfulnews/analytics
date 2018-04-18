@@ -4,7 +4,6 @@ import Home from '@/containers/Home';
 import Explore from '@/containers/Explore';
 import Account from '@/containers/Account';
 import Bookmarks from '@/containers/Bookmarks';
-import Authenticate from '@/containers/Authenticate';
 
 Vue.use(Router);
 
@@ -30,11 +29,6 @@ export default new Router({
       path: '/bookmarks',
       name: 'Bookmarks',
       component: Bookmarks,
-    },
-    {
-      path: '/login',
-      name: 'Authenticate',
-      component: Authenticate,
     },
   ],
 });

@@ -1,14 +1,19 @@
 <template>
   <div id="app">
     <md-app md-waterfall md-mode="fixed">
-      <md-app-toolbar class="md-primary site-toolbar">
-        <span class="md-title">{{getAppTitle}}</span>
+      <md-app-toolbar class="site-toolbar">
+        <h3 class="md-title" style="flex: 1">{{getAppTitle}}</h3>
+        <md-button class="md-primary"
+          v-if="getAuthLoginStatus"
+          @click="logout">
+          Log out
+        </md-button>
       </md-app-toolbar>
       <md-app-drawer class="md-elevation-4" md-permanent="full">
         <md-toolbar class="md-transparent site-title-container" md-elevation="0">
           <h2 class="site-title">{RN}</h2>
         </md-toolbar>
-        <md-list class="main-navbar">
+        <md-list class="main-navbar mnav">
           <md-list-item v-for="item in menu" :key="item.to">
             <router-link :to="item.to" class="nav-item">
               <md-icon class="nav-icon md-size-2x">{{item.icon}}</md-icon>
@@ -24,23 +29,30 @@
       </md-app-content>
     </md-app>
     <div class="phone-viewport md-elevation-12 mobile-bar">
-      <md-bottom-bar md-theme="bottom-bar-blue" md-mode="shift" md-sync-route>
-        <md-bottom-bar-item v-for="item in menu" :key="item.label"
-          :to="item.to" :md-label="item.label" :md-icon="item.icon">
-        </md-bottom-bar-item>
-      </md-bottom-bar>
+      <router-link v-for="item in menu" :key="item.to" :to="item.to">
+          <md-icon class="nav-icon md-size-2x">{{item.icon}}</md-icon>
+          <span class="md-list-item-text">
+            {{item.label}}
+          </span>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'App',
   computed: {
     ...mapGetters([
       'getAppTitle',
+      'getAuthLoginStatus',
+    ]),
+  },
+  methods: {
+    ...mapActions([
+      'logout',
     ]),
   },
   data: () => ({
@@ -70,16 +82,22 @@ export default {
   padding: 0.3em;
 }
 .nav-item {
-  color: white;
+  background-color: #33a1e0 !important;
+  color: white !important;
+}
+.nav-item .nav-icon {
+  color: inherit !important;
 }
 .nav-item:hover {
-  background-color: lightgrey;
+  color: #33a1e0 !important;
+  background-color: white !important;
 }
 .md-app {
   border: 1px solid rgba(#000, .12);
   max-height: 100vh;
 }
 .md-drawer {
+  background-color: #33a1e0 !important;
   width: 100px;
   max-width: calc(100vw - 125px);
   height: 100vh;
@@ -116,6 +134,9 @@ export default {
   padding-top: 1em;
   padding-bottom: 1em;
 }
+.mnav {
+  background-color: #33a1e0 !important;
+}
 .main-navbar .nav-item:hover {
   text-decoration: none;
 }
@@ -126,4 +147,17 @@ export default {
   text-align: center;
   color: #33a1e0;
 }
+.mobile-bar {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  color: #33a1e0 !important;
+}
+.mobile-bar .nav-icon {
+  color: #33a1e0 !important;
+}
+.mobile-navbar a:active {
+  text-decoration: none !important;
+}
+
 </style>

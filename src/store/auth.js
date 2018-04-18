@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import axios from 'axios';
-import { setCookie } from '../utils/cookie';
+import { setCookie, getCookie, deleteCookie } from '../utils/cookie';
 
 const state = {
   mode: 'login',
@@ -41,6 +41,7 @@ const actions = {
       }).then((response) => {
         commit('setAuthLoginStatus', true);
         commit('setJwt', response.data.token);
+        setCookie('jwt', response.data.token, 30);
         commit('setErrorMsg', null);
       }).catch((error) => {
         // TODO: does this really print an error message?
@@ -66,11 +67,24 @@ const actions = {
         commit('setErrorMsg', null);
         commit('setAuthLoginStatus', true);
         commit('setJwt', response.data.token);
+        setCookie('jwt', response.data.token, 30);
       }).catch((error) => {
         commit('setAuthSignupStatus', false);
         commit('setErrorMsg', error.response.data[0].message || error.message);
       });
     }
+  },
+  checkLogin({ commit }) {
+    const jwt = getCookie('jwt');
+    if (!jwt) {
+      commit('setAuthLoginStatus', false);
+    } else {
+      commit('setAuthLoginStatus', true);
+    }
+  },
+  logout({ commit }) {
+    commit('setAuthLoginStatus', false);
+    deleteCookie('jwt');
   },
 };
 
@@ -101,7 +115,6 @@ const mutations = {
   },
   setJwt(state, jwt) {
     state.jwt = jwt;
-    setCookie('jwt', jwt, 30);
   },
 };
 
