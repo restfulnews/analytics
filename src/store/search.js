@@ -1,5 +1,8 @@
 /* eslint-disable no-shadow */
 import axios from 'axios';
+import { getCookie } from '../utils/cookie';
+
+axios.defaults.headers.common.Authorization = `Bearer ${getCookie('jwt')}`;
 
 const state = {
   startTime: new Date(new Date().setFullYear(new Date().getFullYear() - 5)),
@@ -30,7 +33,7 @@ const actions = {
     const keywords = state.keywords.join();
     const url = `${process.env.API_URI}/search?topics=${keywords}&start_date=${startTime}&end_date=${endTime}&companyids=${tickers}`;
     commit('setSearchStatus', 'fetching');
-    axios.get(url, { withCredentials: true })
+    axios.get(url)
       .then((response) => {
         commit('setSearchResults', response.data.data);
         commit('setSearchStatus', 'fetched');
