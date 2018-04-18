@@ -10,7 +10,10 @@
           {{getAuthErrorMsg}}
         </div>
       </article>
-      <span class="site-title login-header">{RN}</span>
+      <h3 class="subtitle">
+        Log in to your <span class="site-title">RN account</span>
+        to continue.
+      </h3>
       <md-field  v-if="getAuthMode === 'signup'" md-clearable>
         <label>Name</label>
         <md-input id="name" v-model="name"></md-input>
@@ -110,5 +113,8 @@ export default {
 }
 .wide {
   width: 100%;
+}
+.site-title {
+  font-size: .8em;
 }
 </style>

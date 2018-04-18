@@ -101,7 +101,7 @@ const mutations = {
   },
   setJwt(state, jwt) {
     state.jwt = jwt;
-    setCookie('jwt', jwt);
+    setCookie('jwt', jwt, 30);
   },
 };
 
