@@ -9,7 +9,7 @@
           Log out
         </md-button>
       </md-app-toolbar>
-      <md-app-drawer class="md-elevation-4" md-permanent="full">
+      <md-app-drawer class="md-elevation-4 main-drawer" md-permanent="full">
         <md-toolbar class="md-transparent site-title-container" md-elevation="0">
           <h2 class="site-title">{RN}</h2>
         </md-toolbar>
@@ -67,6 +67,9 @@ export default {
 </script>
 
 <style>
+.main-drawer {
+  width: 8em;
+}
 .site-title-container {
   display: flex;
   flex-direction: column;
