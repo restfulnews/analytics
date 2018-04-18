@@ -1,18 +1,27 @@
 <template>
-  <div id="Authenticate">
+  <md-dialog :md-active.sync="showDialog">
     <md-card class="auth-card">
+      <article v-if="getAuthErrorMsg" class="message is-danger wide">
+        <div class="message-header">
+          <p>Authentication Error</p>
+          <button class="delete" aria-label="delete" />
+        </div>
+        <div class="message-body">
+          {{getAuthErrorMsg}}
+        </div>
+      </article>
       <span class="site-title login-header">{RN}</span>
       <md-field  v-if="getAuthMode === 'signup'" md-clearable>
         <label>Name</label>
-        <md-input v-model="name"></md-input>
+        <md-input id="name" v-model="name"></md-input>
       </md-field>
       <md-field md-clearable>
         <label>Email</label>
-        <md-input v-model="email"></md-input>
+        <md-input id="email" v-model="email"></md-input>
       </md-field>
       <md-field>
         <label>Password</label>
-        <md-input v-model="password" type="password"></md-input>
+        <md-input id="password" v-model="password" type="password"></md-input>
       </md-field>
       <md-field v-if="getAuthMode === 'signup'">
         <label>Confirm Password</label>
@@ -20,7 +29,7 @@
       </md-field>
       <div class="md-layout">
         <div class="md-layout-item">
-          <md-button class="md-raised md-primary auth-btn"
+          <md-button class="md-raised md-primary wide"
             :disabled="getAuthMode === 'signup'"
             @click="_login()"
           >
@@ -28,7 +37,7 @@
           </md-button>
         </div>
         <div class="md-layout-item">
-          <md-button class="md-raised md-clear auth-btn"
+          <md-button class="md-raised md-clear wide"
             @click="_signup()"
           >
             Sign up
@@ -36,7 +45,7 @@
         </div>
       </div>
     </md-card>
-  </div>
+  </md-dialog>
 </template>
 
 <script>
@@ -47,6 +56,8 @@ export default {
   computed: {
     ...mapGetters([
       'getAuthMode',
+      'getAuthErrorMsg',
+      'getAuthLoginStatus',
     ]),
     name: {
       get() { return this.$store.state.auth.name; },
@@ -64,6 +75,9 @@ export default {
       get() { return this.$store.state.auth.confirmPassword; },
       set(val) { this.updateAuthConfirmPassword(val); },
     },
+    showDialog() {
+      return !this.getAuthLoginStatus;
+    },
   },
   methods: {
     ...mapActions([
@@ -73,6 +87,7 @@ export default {
       'updateAuthPassword',
       'updateAuthConfirmPassword',
       'login',
+      'signup',
     ]),
     _login() {
       this.login();
@@ -80,6 +95,8 @@ export default {
     _signup() {
       if (this.getAuthMode === 'login') {
         this.updateAuthMode('signup');
+      } else {
+        this.signup();
       }
     },
   },
@@ -87,33 +104,11 @@ export default {
 </script>
 
 <style scoped>
-#Authenticate {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 90vh;
-}
 .auth-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   width: 30em;
-  min-height: 30em;
   padding: 2em;
 }
-/* Mobile card */
-@media only screen and (max-width: 600px) {
-  .auth-card {
-    width: 100%;
-    height: 100%;
-  }
-}
-.login-header {
-  margin-bottom: 1em;
-}
-.auth-btn {
+.wide {
   width: 100%;
 }
 </style>
