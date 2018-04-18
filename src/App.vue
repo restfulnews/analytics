@@ -68,7 +68,7 @@ export default {
 
 <style>
 .main-drawer {
-  width: 8em;
+  width: 8em !important;
 }
 .site-title-container {
   display: flex;
