@@ -1,36 +1,30 @@
 <template>
-<div class="timeline">
+  <div class="timeline">
     <ul>
-        <div v-for="ticker in tickers">
+      <div v-for="ticker in tickers">
+        <li>
+          <span class="title-eyebrow">{{ticker}}</span>
+        </li>
+        <div v-for="date in getDates(getData(results, ticker))">
+          <li>
+            <span class="big-eyebrow">{{date}}</span>
+          </li>
+          <div v-for="result in getData(dateFilter(results, date), ticker)">
             <li>
-            <span class="title-eyebrow">{{ticker}}</span>
+              <span class="eyebrow">{{formatTime(result.publishedAt)}}</span>
+              <div class="block">
+                  <h1>{{result.title}}</h1>
+                  <p> {{result.abstract}} </p>
+              </div>
             </li>
-            <div v-for="date in getDates(getData(results, ticker))">
-                <li>
-                <span class="big-eyebrow">{{date}}</span>
-                </li>
-
-                <div v-for="result in getData(dateFilter(results, date), ticker)">
-                    <li>
-                    <span class="eyebrow">{{formatTime(result.publishedAt)}}</span>
-                    <div class="block">
-                        <h1>{{result.title}}</h1>
-                        <p> {{result.abstract}} </p>
-                    </div>
-
-                    </li>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </ul>
-</div>
-
-
-
+  </div>
 </template>
 
 <script>
-
 export default {
   name: 'Timeline',
   props: ['results', 'tickers'],
@@ -87,20 +81,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 $color: #383838;
 $softcolor: #585858;
 $titlecolor: #282828;
 $size: 10px;
-
-
 img {
   max-width: 100%;
 }
 .block{
-    margin-top: 20px;
+  margin-top: 20px;
 }
-
 .timeline {
   padding: 20px;
   max-width: 600px;
@@ -280,5 +270,4 @@ img {
     }
   }
 }
-
 </style>
