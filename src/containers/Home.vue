@@ -13,9 +13,19 @@
       </div>
     </section>
     <section class="section main-container">
-      <h1 class="title"><md-icon class="md-size-2x">show_chart</md-icon>
-       Trending News</h1>
-      <feature-unavailable/>
+      <div class="columns">
+      <md-card>
+        hello aosifhasoifnaosifna osifnasoifna sofians foiasnf 
+      </md-card>
+      <md-card>
+        hello aosifhasoifnaosifna osifnasoifna sofians foiasnf 
+      </md-card>
+      <md-card>
+        hello aosifhasoifnaosifna osifnasoifna sofians foiasnf 
+      </md-card>
+
+      </div>
+
     </section>
     <footer class="footer">
       <div class="container">
