@@ -20,7 +20,6 @@ export default {
   },
   methods : {
     checkResults: function(raw) {
-        console.log(raw.length)
         if (raw.length < 1){
             return false;
         }

@@ -21,7 +21,7 @@
                     </li>
                 </div>
             </div>
-        </div>  
+        </div>
     </ul>
 </div>
 
@@ -40,7 +40,7 @@ export default {
         var data = [];
         for (var i = 0; i < arrayLength; i++) {
             var singleData = (raw[i]);
-            
+
             if (singleData.title.toLowerCase().includes(companyname.toLowerCase())){
                 data.push(singleData);
             }
@@ -65,30 +65,24 @@ export default {
     },
     dateFilter: function(raw, compyear){
         var data = [];
-        console.log(compyear.toString())
+        (compyear.toString())
         var arrayLength = raw.length;
         for (var i = 0; i < arrayLength; i++) {
             var singleData = (raw[i]);
             var date = new Date(singleData.publishedAt);
             var year = date.getFullYear();
-            console.log(year.toString(), compyear.toString())
             if (year.toString() === compyear.toString()){
-                console.log(year, date.getFullYear())
                 data.push(singleData);
             }
         }
         return data;
 
     },
-    formatTime: function(time) {
-        console.log(time)
-        var rawtime = new Date(time);
-
-        return rawtime.toDateString();
+    formatTime(time) {
+      const rawtime = new Date(time);
+      return rawtime.toDateString();
     }
-  }
-
-
+  },
 };
 </script>
 
@@ -182,7 +176,7 @@ img {
           width: 20px;
           top: 9px;
           z-index: -1;
-        } 
+        }
       }
       .big-eyebrow {
         display: table;
@@ -207,7 +201,7 @@ img {
           width: 20px;
           top: 9px;
           z-index: -1;
-        } 
+        }
       }
       .title-eyebrow {
         display: table;
@@ -231,7 +225,7 @@ img {
           width: 20px;
           top: 9px;
           z-index: -1;
-        } 
+        }
       }
       &:before {
         content: "";
@@ -245,13 +239,13 @@ img {
         z-index: 2;
         left: -30px;
         outline: 2px solid white;
-        top: 7.5px; 
+        top: 7.5px;
       }
     }
   }
 }
 
-//video 
+//video
 .m-video {
   -webkit-transform: translate3d(0,0,0);
   margin-bottom: 15px;
