@@ -4,6 +4,7 @@ import Home from '@/containers/Home';
 import Explore from '@/containers/Explore';
 import Account from '@/containers/Account';
 import Bookmarks from '@/containers/Bookmarks';
+import C404 from '@/containers/C404';
 
 Vue.use(Router);
 
@@ -29,6 +30,15 @@ export default new Router({
       path: '/bookmarks',
       name: 'Bookmarks',
       component: Bookmarks,
+    },
+    {
+      path: '/404',
+      name: '404',
+      component: C404,
+    },
+    {
+      path: '*',
+      redirect: '/404',
     },
   ],
 });
