@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 import axios from 'axios';
+import { setCookie, getCookie, deleteCookie } from '../utils/cookie';
 
 const state = {
   mode: 'login',
@@ -40,14 +41,50 @@ const actions = {
       }).then((response) => {
         commit('setAuthLoginStatus', true);
         commit('setJwt', response.data.token);
+        setCookie('jwt', response.data.token, 30);
         commit('setErrorMsg', null);
       }).catch((error) => {
+        // TODO: does this really print an error message?
         commit('setAuthLoginStatus', false);
-        commit('setErrorMsg', error.data[0].message);
+        commit('setErrorMsg', error.response.data[0].message || error.message);
       });
     }
   },
-  signup() {
+  signup({ commit, state }) {
+    if (!state.name || !state.email || !state.password || !state.confirmPassword) {
+      commit('setAuthSignupStatus', false);
+      commit('setErrorMsg', 'Please complete the form.');
+    } else if (state.password !== state.confirmPassword) {
+      commit('setAuthSignupStatus', false);
+      commit('setErrorMsg', 'Passwords don\'t match.');
+    } else {
+      axios.post(`${process.env.API_URI}/users`, {
+        name: state.name,
+        email: state.email,
+        password: state.password,
+      }).then((response) => {
+        commit('setAuthSignupStatus', true);
+        commit('setErrorMsg', null);
+        commit('setAuthLoginStatus', true);
+        commit('setJwt', response.data.token);
+        setCookie('jwt', response.data.token, 30);
+      }).catch((error) => {
+        commit('setAuthSignupStatus', false);
+        commit('setErrorMsg', error.response.data[0].message || error.message);
+      });
+    }
+  },
+  checkLogin({ commit }) {
+    const jwt = getCookie('jwt');
+    if (!jwt) {
+      commit('setAuthLoginStatus', false);
+    } else {
+      commit('setAuthLoginStatus', true);
+    }
+  },
+  logout({ commit }) {
+    commit('setAuthLoginStatus', false);
+    deleteCookie('jwt');
   },
 };
 
@@ -83,7 +120,8 @@ const mutations = {
 
 const getters = {
   getAuthMode: state => state.mode,
-  getErrorMsg: state => state.errorMsg,
+  getAuthErrorMsg: state => state.errorMsg,
+  getAuthLoginStatus: state => state.loginStatus,
 };
 
 export default {

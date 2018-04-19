@@ -49,11 +49,13 @@
         v-bind:results="getSearchResults"
       />
     </div>
+    <auth />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import Auth from '@/containers/Auth';
 import NewsCard from '@/components/NewsCard';
 import GraphCard from '@/components/GraphCard';
 import FeatureUnavailable from '@/components/FeatureUnavailable';
@@ -61,6 +63,7 @@ import FeatureUnavailable from '@/components/FeatureUnavailable';
 export default {
   name: 'Explore',
   components: {
+    auth: Auth,
     'news-card': NewsCard,
     'graph-card': GraphCard,
     'feature-unavailable': FeatureUnavailable,

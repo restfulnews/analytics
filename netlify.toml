@@ -1,0 +1,14 @@
+[Settings]
+  ID = "restfulnews"
+
+# Settings in the [build] context are global and are applied to all contexts unless otherwise overridden by more specific contexts.
+
+[build]
+  base = "/"
+  publish = "dist/"
+  command = "npm run build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
