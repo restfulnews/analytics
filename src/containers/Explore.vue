@@ -44,7 +44,10 @@
       />
     </div>
     <div class="column is-main-content is-hidden-mobile">
-      <feature-unavailable />
+      <graph-card
+        v-bind:tickers="tickers"
+        v-bind:results="getSearchResults"
+      />
     </div>
   </div>
 </template>
@@ -52,12 +55,14 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import NewsCard from '@/components/NewsCard';
+import GraphCard from '@/components/GraphCard';
 import FeatureUnavailable from '@/components/FeatureUnavailable';
 
 export default {
   name: 'Explore',
   components: {
     'news-card': NewsCard,
+    'graph-card': GraphCard,
     'feature-unavailable': FeatureUnavailable,
   },
   computed: {
@@ -67,7 +72,7 @@ export default {
     ]),
     startTime: {
       get() { return this.$store.state.search.startTime; },
-      set(val) { this.updateSearchStartTime(val); },
+      set(val) { this.updateSearchStartTime(val); },     
     },
     endTime: {
       get() { return this.$store.state.search.endTime; },
