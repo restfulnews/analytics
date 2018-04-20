@@ -90,11 +90,12 @@ export default {
 .nav-item .nav-icon {
   color: inherit !important;
 }
+/*
 .nav-item:hover {
   width: 100%;
   color: #33a1e0 !important;
   background-color: white !important;
-}
+}*/
 .md-app {
   border: 1px solid rgba(#000, .12);
   max-height: 100vh;
