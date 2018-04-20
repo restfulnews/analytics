@@ -57,7 +57,6 @@ export default {
   },
   data: () => ({
     menu: [
-      { label: 'Home', to: '/', icon: 'home' },
       { label: 'Explore', to: 'explore', icon: 'art_track' },
       { label: 'Bookmarks', to: 'bookmarks', icon: 'bookmark' },
       { label: 'Account', to: 'account', icon: 'account_circle' },
@@ -68,7 +67,7 @@ export default {
 
 <style>
 .main-drawer {
-  width: 8em !important;
+  width: 6em !important;
 }
 .site-title-container {
   display: flex;
@@ -92,6 +91,7 @@ export default {
   color: inherit !important;
 }
 .nav-item:hover {
+  width: 100%;
   color: #33a1e0 !important;
   background-color: white !important;
 }
