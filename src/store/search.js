@@ -1,5 +1,4 @@
 /* eslint-disable no-shadow */
-import axios from 'axios';
 import { http } from '../utils/http';
 
 const state = {
