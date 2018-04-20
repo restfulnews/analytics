@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import { http } from '../utils/http';
+import http from '../utils/http';
 
 const state = {
   startTime: new Date(new Date().setFullYear(new Date().getFullYear() - 5)),
