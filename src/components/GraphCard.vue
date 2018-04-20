@@ -9,6 +9,7 @@
 
 <script>
 import Timeline from './Timeline';
+
 export default {
   name: 'GraphCard',
   components: {
@@ -19,11 +20,11 @@ export default {
     chartData: {'2017-01-01': 11, '2017-01-02': 6}
   },
   methods : {
-    checkResults: function(raw) {
-        if (raw.length < 1){
-            return false;
-        }
-        return true;
+    checkResults(raw) {
+      if (raw.length < 1){
+        return false;
+      }
+      return true;
     }
   }
 };

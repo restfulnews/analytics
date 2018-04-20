@@ -1,15 +1,15 @@
 <template>
   <div class="timeline">
     <ul>
-      <div v-for="ticker in tickers">
+      <div v-for="ticker in tickers" :key="ticker">
         <li>
           <span class="title-eyebrow">{{ticker}}</span>
         </li>
-        <div v-for="date in getDates(getData(results, ticker))">
+        <div v-for="date in getDates(getData(results, ticker))" :key="date">
           <li>
             <span class="big-eyebrow">{{date}}</span>
           </li>
-          <div v-for="result in getData(dateFilter(results, date), ticker)">
+          <div v-for="result in getData(dateFilter(results, date), ticker)" :key="result">
             <li>
               <span class="eyebrow">{{formatTime(result.publishedAt)}}</span>
               <div class="block">
@@ -29,48 +29,45 @@ export default {
   name: 'Timeline',
   props: ['results', 'tickers'],
   methods : {
-    getData: function(raw, companyname) {
-        var arrayLength = raw.length;
-        var data = [];
-        for (var i = 0; i < arrayLength; i++) {
-            var singleData = (raw[i]);
-
-            if (singleData.title.toLowerCase().includes(companyname.toLowerCase())){
-                data.push(singleData);
-            }
+    getData(raw, companyname) {
+      const arrayLength = raw.length;
+      const data = [];
+      for (let i = 0; i < arrayLength; i += 1) {
+        const singleData = (raw[i]);
+        if (singleData.title.toLowerCase().includes(companyname.toLowerCase())){
+          data.push(singleData);
         }
-        return data.sort(function(a,b){
-            return new Date(a.publishedAt) - new Date(b.publishedAt);
-        });
+      }
+      return data.sort((a,b) => {
+        return new Date(a.publishedAt) - new Date(b.publishedAt);
+      });
     },
-    getDates: function(raw){
-        var dates = []
-        var arrayLength = raw.length;
-        for (var i = 0; i < arrayLength; i++) {
-            var singleData = (raw[i]);
-            var date = new Date(singleData.publishedAt);
-            var year = date.getFullYear();
-            if (!dates.includes(year)){
-                dates.push(year);
-            }
+    getDates(raw) {
+      const dates = []
+      const arrayLength = raw.length;
+      for (var i = 0; i < arrayLength; i += 1) {
+        const singleData = (raw[i]);
+        const date = new Date(singleData.publishedAt);
+        const year = date.getFullYear();
+        if (!dates.includes(year)){
+          dates.push(year);
         }
-        return dates.sort();
-
+      }
+      return dates.sort();
     },
-    dateFilter: function(raw, compyear){
-        var data = [];
+    dateFilter(raw, compyear) {
+        const data = [];
         (compyear.toString())
-        var arrayLength = raw.length;
-        for (var i = 0; i < arrayLength; i++) {
-            var singleData = (raw[i]);
-            var date = new Date(singleData.publishedAt);
-            var year = date.getFullYear();
+        const arrayLength = raw.length;
+        for (let i = 0; i < arrayLength; i += 1) {
+            const singleData = (raw[i]);
+            const date = new Date(singleData.publishedAt);
+            const year = date.getFullYear();
             if (year.toString() === compyear.toString()){
-                data.push(singleData);
+              data.push(singleData);
             }
         }
         return data;
-
     },
     formatTime(time) {
       const rawtime = new Date(time);

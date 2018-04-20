@@ -44,7 +44,6 @@ const actions = {
         setCookie('jwt', response.data.token, 30);
         commit('setErrorMsg', null);
       }).catch((error) => {
-        // TODO: does this really print an error message?
         commit('setAuthLoginStatus', false);
         commit('setErrorMsg', error.response.data[0].message || error.message);
       });
