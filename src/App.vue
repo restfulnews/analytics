@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <div class="back">
-   
       <md-card class="main-panel">
         <md-steppers md-sync-route md-dynamic-height>
           <md-step id="Analyse" to="/home" md-label="Analyse">
@@ -18,10 +17,8 @@
             <router-view/>
           </md-app-content>
         </md-app>
-
       </md-card>
     </div>
-        
   </div>
 </template>
 
