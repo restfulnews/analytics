@@ -1,7 +1,6 @@
 <template>
     <div>
-        <span class="md-display-4">Welcome</span>
-        <md-card class="md-accent" md-with-hover>
+        <md-card md-with-hover>
             <md-card-header>
                 <div class="md-title">Analyse the news</div>
             </md-card-header>

@@ -45,7 +45,6 @@
 import { mapGetters, mapActions } from 'vuex';
 import NewsCard from '@/components/NewsCard';
 import GraphCard from '@/components/GraphCard';
-import CompanyReturnsChart from '@/components/CompanyReturnsChart';
 import FeatureUnavailable from '@/components/FeatureUnavailable';
 import router from '../router'
 
@@ -64,7 +63,6 @@ export default {
   components: {
     'news-card': NewsCard,
     'graph-card': GraphCard,
-    'company-returns-chart': CompanyReturnsChart,
     'feature-unavailable': FeatureUnavailable,
   },
   computed: {

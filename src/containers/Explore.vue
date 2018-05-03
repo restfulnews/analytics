@@ -49,7 +49,6 @@
         v-bind:results="getSearchResults"
       />
     </div>
-    <auth />
   </div>
 </template>
 
