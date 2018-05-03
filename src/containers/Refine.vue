@@ -13,10 +13,7 @@
           </md-datepicker>
         </div>
       </div>
-      <md-button
-        class="md-raised md-primary search-btn"
-        @click="updateSearchResults()"
-      >
+      <md-button class="md-raised md-primary search-btn" @click="updateSearchResults()">
         Search News
       </md-button>
     </md-card>
