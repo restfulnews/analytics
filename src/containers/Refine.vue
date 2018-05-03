@@ -1,58 +1,58 @@
 <template>
-  <div class="columns is-fullheight">
-    <div class="column is-5 is-sidebar-menu">
-      <md-card class="news-search">
-        <div class="md-layout">
-          <div class="md-layout-item">
-            <md-datepicker v-model="startTime">
-              <label>Start time</label>
-            </md-datepicker>
-          </div>
-          <div class="md-layout-item">
-            <md-datepicker v-model="endTime">
-              <label>End time</label>
-            </md-datepicker>
-          </div>
+  <div>
+    <md-card class="news-search">
+      <div class="md-layout">
+        <div class="md-layout-item">
+          <md-datepicker v-model="startTime">
+            <label>Start time</label>
+          </md-datepicker>
         </div>
-        <md-button
-          class="md-raised md-primary search-btn"
-          @click="updateSearchResults()"
-        >
-          Search News
-        </md-button>
-      </md-card>
-      <md-progress-bar class="loading" md-mode="indeterminate"
-        v-if="getSearchStatus == 'fetching'"/>
-      <news-card
-        v-for="result in getSearchResults"
-        v-bind:key="result.fingerprint"
-        v-bind:thumbnail="result.thumbnail"
-        v-bind:abstract="result.abstract"
-        v-bind:publishedAt="result.publishedAt"
-        v-bind:title="result.title"
-        v-bind:url="result.url"
-      />
+        <div class="md-layout-item">
+          <md-datepicker v-model="endTime">
+            <label>End time</label>
+          </md-datepicker>
+        </div>
+      </div>
+      <md-button
+        class="md-raised md-primary search-btn"
+        @click="updateSearchResults()"
+      >
+        Search News
+      </md-button>
+    </md-card>
+    <md-progress-bar class="md-accent" md-mode="query"
+      v-if="getSearchStatus == 'fetching'"/>
+    <div class="columns is-fullheight">
+      <div class="column is-5 is-sidebar-menu">
+        <news-card
+          v-for="result in getSearchResults"
+          v-bind:key="result.fingerprint"
+          v-bind:thumbnail="result.thumbnail"
+          v-bind:abstract="result.abstract"
+          v-bind:publishedAt="result.publishedAt"
+          v-bind:title="result.title"
+          v-bind:url="result.url"
+        />
+      </div>
+      <div class="column is-main-content is-hidden-mobile">
+        <graph-card
+          v-bind:tickers="tickers"
+          v-bind:results="getSearchResults"
+        />
+      </div>
     </div>
-    <div class="column is-main-content is-hidden-mobile">
-      <graph-card
-        v-bind:tickers="tickers"
-        v-bind:results="getSearchResults"
-      />
-    </div>
-    <auth />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-// import Auth from '@/containers/Auth';
 import NewsCard from '@/components/NewsCard';
 import GraphCard from '@/components/GraphCard';
 import FeatureUnavailable from '@/components/FeatureUnavailable';
 import router from '../router'
 
 export default {
-  name: 'Explore',
+  name: 'Refine',
   data () {
         return {
             keywords: 'something went wrong lol oops',
@@ -64,7 +64,6 @@ export default {
       this.tickers = this.$route.params.tickers;
   },
   components: {
-    // auth: Auth,
     'news-card': NewsCard,
     'graph-card': GraphCard,
     'feature-unavailable': FeatureUnavailable,
@@ -105,7 +104,7 @@ export default {
         },
   },
   mounted() {
-    this.updateAppTitle('Explore');
+    this.updateAppTitle('Refine');
   },
 };
 </script>
@@ -136,7 +135,7 @@ export default {
   display: inline;
   padding-bottom: .4em;
 }
-.loading {
+.md-progress-bar {
   text-align: center;
   width: 90%;
   margin: 25px;

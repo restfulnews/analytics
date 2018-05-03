@@ -60,6 +60,8 @@ export default {
       { label: 'Explore', to: 'explore', icon: 'art_track' },
       { label: 'Bookmarks', to: 'bookmarks', icon: 'bookmark' },
       { label: 'Account', to: 'account', icon: 'account_circle' },
+      { label: 'Home', to: 'home', icon: 'home' },
+      { label: 'Refine', to: 'refine', icon: 'gesture' },
     ],
   }),
 };
