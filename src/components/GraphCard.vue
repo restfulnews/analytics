@@ -13,20 +13,17 @@ import Timeline from './Timeline';
 export default {
   name: 'GraphCard',
   components: {
-    'timeline': Timeline,
+    timeline: Timeline,
   },
   props: ['tickers', 'results'],
-  data: {
-    chartData: {'2017-01-01': 11, '2017-01-02': 6}
-  },
-  methods : {
+  methods: {
     checkResults(raw) {
-      if (raw.length < 1){
+      if (raw.length < 1) {
         return false;
       }
       return true;
-    }
-  }
+    },
+  },
 };
 </script>
 

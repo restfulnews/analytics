@@ -48,19 +48,19 @@ import NewsCard from '@/components/NewsCard';
 import GraphCard from '@/components/GraphCard';
 import CompanyReturnsChart from '@/components/CompanyReturnsChart';
 import FeatureUnavailable from '@/components/FeatureUnavailable';
-import router from '../router'
+import router from '../router';
 
 export default {
   name: 'Refine',
-  data () {
-        return {
-            keywords: 'something went wrong lol oops',
-            tickers: 'tick tock im a clock',
-        }
-    },
+  data() {
+    return {
+      keywords: 'something went wrong lol oops',
+      tickers: 'tick tock im a clock',
+    };
+  },
   created() {
-      this.keywords = this.$route.params.keywords;
-      this.tickers = this.$route.params.tickers;
+    this.keywords = this.$route.params.keywords;
+    this.tickers = this.$route.params.tickers;
   },
   components: {
     'news-card': NewsCard,
@@ -75,20 +75,20 @@ export default {
     ]),
     startTime: {
       get() { return this.$store.state.search.startTime; },
-      set(val) { this.updateSearchStartTime(val); },     
+      set(val) { this.updateSearchStartTime(val); },
     },
     endTime: {
       get() { return this.$store.state.search.endTime; },
       set(val) { this.updateSearchEndTime(val); },
     },
-    keywords: {
-      get() { return this.$store.state.search.keywords; },
-      set(val) { this.updateSearchKeywords(val); },
-    },
-    tickers: {
-      get() { return this.$store.state.search.tickers; },
-      set(val) { this.updateSearchTickers(val); },
-    },
+    // keywords: {
+    //   get() { return this.$store.state.search.keywords; },
+    //   set(val) { this.updateSearchKeywords(val); },
+    // },
+    // tickers: {
+    //   get() { return this.$store.state.search.tickers; },
+    //   set(val) { this.updateSearchTickers(val); },
+    // },
   },
   methods: {
     ...mapActions([
@@ -100,8 +100,8 @@ export default {
       'updateAppTitle',
     ]),
     navigate() {
-            router.go(-1);
-        },
+      router.go(-1);
+    },
   },
   mounted() {
     this.updateAppTitle('Refine');

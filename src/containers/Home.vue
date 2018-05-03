@@ -1,38 +1,42 @@
 <template>
-    <div>
-        <span class="md-display-4">Welcome</span>
-        <md-card class="md-accent" md-with-hover>
-            <md-card-header>
-                <div class="md-title">Analyse the news</div>
-            </md-card-header>
+  <div>
+    <span class="md-display-4">Welcome</span>
+    <md-card class="md-accent" md-with-hover>
+      <md-card-header>
+        <div class="md-title">Analyse the news</div>
+      </md-card-header>
 
-            <md-card-content>
-                <span>I'm interested in how...</span>
-                <md-chips
-                    md-deletable
-                    v-model="keywords"
-                    md-check-duplicated="true"
-                    md-placeholder="keywords"
-                />
-                <span>...affects...</span>
-                <md-chips
-                    v-model="tickers"
-                    md-check-duplicated="true"
-                    md-placeholder="companies and company tickers"
-                />
-            </md-card-content>
-
-            <md-card-actions>
-                <router-link @click.native="updateSearchResults()" :to="{ name: 'Refine', params: { keywords: keywords, tickers: tickers } }" tag="md-button">Refine</router-link>
-            </md-card-actions>
-        </md-card>
-        <md-progress-bar class="loading" md-mode="indeterminate"
+      <md-card-content>
+        <span>I'm interested in how...</span>
+        <md-chips
+          md-deletable
+          v-model="keywords"
+          md-check-duplicated="true"
+          md-placeholder="keywords"
+        />
+        <span>...affects...</span>
+        <md-chips
+          v-model="tickers"
+          md-check-duplicated="true"
+          md-placeholder="companies and company tickers"
+        />
+        </md-card-content>
+        <md-card-actions>
+          <router-link
+            @click.native="updateSearchResults()"
+            :to="{ name: 'Refine', params: { keywords: keywords, tickers: tickers } }"
+            tag="md-button">
+            Refine
+          </router-link>
+        </md-card-actions>
+      </md-card>
+      <md-progress-bar class="loading" md-mode="indeterminate"
         v-if="getSearchStatus == 'fetching'"/>
     </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapActions } from 'vuex'; // mapGetters was here but wasn't being used
 
 export default {
   name: 'Home',
