@@ -19,6 +19,7 @@
     </md-card>
     <md-progress-bar class="md-accent" md-mode="query"
       v-if="getSearchStatus == 'fetching'"/>
+    <company-returns-chart />
     <div class="columns is-fullheight">
       <div class="column is-5 is-sidebar-menu">
         <news-card

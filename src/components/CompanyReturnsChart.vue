@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import LineChart from './LineChart.js'
+  import LineChart from '@/store/lineChart.js'
 
   export default {
     components: {
@@ -26,13 +26,9 @@
           labels: [this.getRandomInt(), this.getRandomInt()],
           datasets: [
             {
-              label: 'Data One',
+              label: 'Company Returns',
               backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }, {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt()]
+              data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
             }
           ]
         }
