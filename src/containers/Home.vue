@@ -23,7 +23,7 @@
             </md-card-content>
 
             <md-card-actions>
-                <router-link :to="{ name: 'Refine', params: { keywords: keywords, tickers: tickers } }" tag="md-button">Refine</router-link>
+                <router-link @click.native="updateSearchResults()" :to="{ name: 'Refine', params: { keywords: keywords, tickers: tickers } }" tag="md-button">Refine</router-link>
             </md-card-actions>
         </md-card>
         <md-progress-bar class="loading" md-mode="indeterminate"
@@ -50,6 +50,7 @@ export default {
     ...mapActions([
       'updateSearchKeywords',
       'updateSearchTickers',
+      'updateSearchResults',
       'updateAppTitle',
     ]),
   },
