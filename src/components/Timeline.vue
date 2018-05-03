@@ -13,8 +13,8 @@
             <li>
               <span class="eyebrow">{{formatTime(result.publishedAt)}}</span>
               <div class="block">
-                  <h1>{{result.title}}</h1>
-                  <p> {{result.abstract}} </p>
+                <h1>{{result.title}}</h1>
+                <p> {{result.abstract}} </p>
               </div>
             </li>
           </div>
@@ -28,51 +28,49 @@
 export default {
   name: 'Timeline',
   props: ['results', 'tickers'],
-  methods : {
+  methods: {
     getData(raw, companyname) {
       const arrayLength = raw.length;
       const data = [];
       for (let i = 0; i < arrayLength; i += 1) {
         const singleData = (raw[i]);
-        if (singleData.title.toLowerCase().includes(companyname.toLowerCase())){
+        if (singleData.title.toLowerCase().includes(companyname.toLowerCase())) {
           data.push(singleData);
         }
       }
-      return data.sort((a,b) => {
-        return new Date(a.publishedAt) - new Date(b.publishedAt);
-      });
+      return data.sort((a, b) => (new Date(a.publishedAt) - new Date(b.publishedAt)));
     },
     getDates(raw) {
-      const dates = []
+      const dates = [];
       const arrayLength = raw.length;
-      for (var i = 0; i < arrayLength; i += 1) {
+      for (let i = 0; i < arrayLength; i += 1) {
         const singleData = (raw[i]);
         const date = new Date(singleData.publishedAt);
         const year = date.getFullYear();
-        if (!dates.includes(year)){
+        if (!dates.includes(year)) {
           dates.push(year);
         }
       }
       return dates.sort();
     },
     dateFilter(raw, compyear) {
-        const data = [];
-        (compyear.toString())
-        const arrayLength = raw.length;
-        for (let i = 0; i < arrayLength; i += 1) {
-            const singleData = (raw[i]);
-            const date = new Date(singleData.publishedAt);
-            const year = date.getFullYear();
-            if (year.toString() === compyear.toString()){
-              data.push(singleData);
-            }
+      const data = [];
+      (compyear.toString());
+      const arrayLength = raw.length;
+      for (let i = 0; i < arrayLength; i += 1) {
+        const singleData = (raw[i]);
+        const date = new Date(singleData.publishedAt);
+        const year = date.getFullYear();
+        if (year.toString() === compyear.toString()) {
+          data.push(singleData);
         }
-        return data;
+      }
+      return data;
     },
     formatTime(time) {
       const rawtime = new Date(time);
       return rawtime.toDateString();
-    }
+    },
   },
 };
 </script>

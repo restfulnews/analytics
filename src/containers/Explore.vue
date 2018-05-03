@@ -74,7 +74,7 @@ export default {
     ]),
     startTime: {
       get() { return this.$store.state.search.startTime; },
-      set(val) { this.updateSearchStartTime(val); },     
+      set(val) { this.updateSearchStartTime(val); },
     },
     endTime: {
       get() { return this.$store.state.search.endTime; },

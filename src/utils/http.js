@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCookie } from './cookie';
+// import { getCookie } from './cookie';
 
 const http = axios.create({
   baseURL: `${process.env.API_URI}/`,
