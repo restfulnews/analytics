@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="back">
-   
+      <br/>
       <md-card class="main-panel">
         <md-steppers md-sync-route md-dynamic-height>
           <md-step id="Analyse" to="/home" md-label="Analyse">
@@ -20,8 +20,9 @@
         </md-app>
 
       </md-card>
+      <br/>
+      <br/>
     </div>
-        
   </div>
 </template>
 
@@ -55,10 +56,10 @@ export default {
 
 <style lang="scss">
 .main-panel{
-  margin: 40px;
+  margin-right: 40px;
+  margin-left: 40px;
 }
 .back{
-  top:0%;
   background-color: slategrey;
 }
 
