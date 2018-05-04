@@ -18,7 +18,6 @@
             <router-view/>
           </md-app-content>
         </md-app>
-
       </md-card>
       <br/>
       <br/>
