@@ -39,6 +39,9 @@
         />
       </div>
     </div>
+    <router-link :to="{ name: 'Build' }" tag="md-button" class="md-raised md-primary next-button">
+      Build
+    </router-link>
   </div>
 </template>
 
@@ -137,5 +140,8 @@ export default {
   text-align: center;
   width: 90%;
   margin: 25px;
+}
+.next-button {
+  width: 100%;
 }
 </style>
