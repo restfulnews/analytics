@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <build-card class='centred-card'/>
+  <div class='centred-card'>
+    <build-card/>
   </div>
 </template>
 
