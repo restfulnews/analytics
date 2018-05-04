@@ -1,7 +1,11 @@
 <template>
   <div class="small">
-    <line-chart :chart-data="datacollection"></line-chart>
-    <button @click="fillData()">Randomize</button>
+    <line-chart
+      :chart-data="datacollection"
+      :options="{maintainAspectRatio: false}"
+      :height="400"
+    >
+    </line-chart>
   </div>
 </template>
 
@@ -26,9 +30,13 @@ export default {
         labels: [this.getRandomInt(), this.getRandomInt()],
         datasets: [
           {
-            label: 'Company Returns',
-            backgroundColor: '#f87979',
-            data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt()],
+            label: 'Company One',
+            backgroundColor: '#03A9F4',
+            data: [this.getRandomInt(), this.getRandomInt()],
+          }, {
+            label: 'Company Two',
+            backgroundColor: '#FF5722',
+            data: [this.getRandomInt(), this.getRandomInt()],
           },
         ],
       };
