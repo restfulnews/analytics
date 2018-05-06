@@ -4,12 +4,18 @@
       <div :style="{
         'height': '15em',
         'background-size': 'cover',
-        'background-image': `url(${thumbnail})`
+        'background-image': `url(${article.thumbnail})`
       }"/>
     </md-card-media>
     <md-card-header>
-      <div class="md-title">{{title && title}}</div>
-      <div class="md-subhead">{{abstract}}</div>
+      <div class="md-title">{{article.title && article.title}}</div>
+      <div class="md-subhead">Published on {{formatDate(article.publishedAt)}}</div><br>
+      <div class="md-subhead">{{article.abstract}}</div>
+      <div class="md-subhead" v-if="article.companies"><br>
+        <md-chip class="md-default" v-for="company in article.companies" :key="company.ticker">
+          {{ company.name }} ({{ company.ticker }})
+        </md-chip>
+      </div>
     </md-card-header>
     <md-card-expand>
       <md-card-actions md-alignment="space-between">
@@ -17,32 +23,29 @@
           <md-button class="md-icon-button">
             <md-icon>pageview</md-icon>
           </md-button>
-          <md-button class="md-icon-button">
+          <!-- <md-button class="md-icon-button">
             <md-icon>bookmark</md-icon>
-          </md-button>
-          <md-button class="md-icon-button" :href="url" target="_blank">
+          </md-button> -->
+          <md-button class="md-icon-button" :href="article.url" target="_blank">
             <md-icon>link</md-icon>
           </md-button>
         </div>
-        <md-card-expand-trigger>
-          <md-button class="md-icon-button">
-            <md-icon>keyboard_arrow_down</md-icon>
-          </md-button>
-        </md-card-expand-trigger>
       </md-card-actions>
-      <md-card-expand-content>
-        <md-card-content>
-          {{publishedAt}}
-        </md-card-content>
-      </md-card-expand-content>
     </md-card-expand>
   </md-card>
 </template>
 
 <script>
+import fecha from 'fecha';
+
 export default {
   name: 'NewsCard',
-  props: ['thumbnail', 'title', 'publishedAt', 'abstract', 'url'],
+  props: ['article'],
+  methods: {
+    formatDate(date) {
+      return fecha.format(new Date(date), 'dddd MMMM Do, YYYY');
+    },
+  },
 };
 </script>
 

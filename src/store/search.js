@@ -4,10 +4,11 @@ import http from '../utils/http';
 const state = {
   startTime: new Date(new Date().setFullYear(new Date().getFullYear() - 5)),
   endTime: new Date(),
-  keywords: ['australia'],
-  tickers: ['woolworths'],
+  keywords: ['Plastic', 'Bags'],
+  tickers: ['Woolworths', 'WES'],
   results: [],
   status: null,
+  meta: null,
 };
 
 const actions = {
@@ -30,10 +31,15 @@ const actions = {
     const keywords = state.keywords.join();
     const url = `/search?topics=${keywords}&start_date=${startTime}&end_date=${endTime}&companyids=${tickers}`;
     commit('setSearchStatus', 'fetching');
+    commit('setSearchMeta', null);
     http.get(url)
       .then((response) => {
         commit('setSearchResults', response.data.data);
         commit('setSearchStatus', 'fetched');
+        commit('setSearchMeta', {
+          elapsedTime: response.data.elapsedTime,
+          companies: response.data.companies,
+        });
       })
       .catch((error) => {
         commit('setSearchStatus', `failed: ${error.status}`);
@@ -60,6 +66,9 @@ const mutations = {
   setSearchStatus(state, status) {
     state.status = status;
   },
+  setSearchMeta(state, meta) {
+    state.meta = meta;
+  },
 };
 
 const getters = {
@@ -69,6 +78,7 @@ const getters = {
   getSearchTickers: state => state.tickers,
   getSearchResults: state => state.results,
   getSearchStatus: state => state.status,
+  getSearchMeta: state => state.meta,
 };
 
 export default {

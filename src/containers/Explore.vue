@@ -17,12 +17,12 @@
         <md-chips
           v-model="keywords"
           md-check-duplicated="true"
-          md-placeholder="Enter a keyword"
+          md-placeholder="Topics / Keywords."
         />
         <md-chips
           v-model="tickers"
           md-check-duplicated="true"
-          md-placeholder="Enter a company ticker."
+          md-placeholder="Reuters Ticker IDs / Company Names"
         />
         <md-button
           class="md-raised md-primary search-btn"
@@ -31,23 +31,18 @@
           Search News
         </md-button>
       </md-card>
-      <md-progress-bar class="loading" md-mode="indeterminate"
+      <md-progress-bar class="loading is-hidden-desktop" md-mode="indeterminate"
         v-if="getSearchStatus == 'fetching'"/>
       <news-card
         v-for="result in getSearchResults"
-        v-bind:key="result.fingerprint"
-        v-bind:thumbnail="result.thumbnail"
-        v-bind:abstract="result.abstract"
-        v-bind:publishedAt="result.publishedAt"
-        v-bind:title="result.title"
-        v-bind:url="result.url"
+        v-bind:article="result"
+        :key="result.fingerprint"
       />
     </div>
     <div class="column is-main-content is-hidden-mobile">
-      <graph-card
-        v-bind:tickers="tickers"
-        v-bind:results="getSearchResults"
-      />
+      <processing-chart
+        text="Retrieving articles..."
+        v-if="getSearchStatus == 'fetching'"/>
     </div>
     <auth />
   </div>
@@ -56,17 +51,17 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Auth from '@/containers/Auth';
-import NewsCard from '@/components/NewsCard';
-import GraphCard from '@/components/GraphCard';
 import FeatureUnavailable from '@/components/FeatureUnavailable';
+import NewsCard from '@/components/NewsCard';
+import ProcessingBox from '@/components/ProcessingBox';
 
 export default {
   name: 'Explore',
   components: {
     auth: Auth,
     'news-card': NewsCard,
-    'graph-card': GraphCard,
     'feature-unavailable': FeatureUnavailable,
+    'processing-chart': ProcessingBox,
   },
   computed: {
     ...mapGetters([
@@ -75,7 +70,7 @@ export default {
     ]),
     startTime: {
       get() { return this.$store.state.search.startTime; },
-      set(val) { this.updateSearchStartTime(val); },     
+      set(val) { this.updateSearchStartTime(val); },
     },
     endTime: {
       get() { return this.$store.state.search.endTime; },

@@ -57,8 +57,8 @@ export default {
   },
   data: () => ({
     menu: [
+      { label: 'Develop', to: 'develop', icon: 'assessment' },
       { label: 'Explore', to: 'explore', icon: 'art_track' },
-      { label: 'Bookmarks', to: 'bookmarks', icon: 'bookmark' },
       { label: 'Account', to: 'account', icon: 'account_circle' },
     ],
   }),
@@ -67,7 +67,7 @@ export default {
 
 <style>
 .main-drawer {
-  width: 6em !important;
+  width: 5em !important;
 }
 .site-title-container {
   display: flex;
@@ -106,7 +106,7 @@ export default {
   max-width: calc(100vw - 125px);
   height: 100vh;
 }
-/* Mobile Navbar */
+/* Desktop Navbar */
 @media (min-width: 600px) {
   .phone-viewport {
     display: none !important;
