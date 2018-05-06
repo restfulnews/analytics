@@ -43,6 +43,11 @@
       <processing-chart
         text="Retrieving articles..."
         v-if="getSearchStatus == 'fetching'"/>
+      <news-card
+        v-if="getSearchStatus != 'fetching' && currentArticle"
+        v-bind:article="currentArticle"
+        :key="currentArticle.fingerprint"
+      />
     </div>
     <auth />
   </div>
@@ -67,7 +72,12 @@ export default {
     ...mapGetters([
       'getSearchResults',
       'getSearchStatus',
+      'getCurrentArticle',
     ]),
+    currentArticle: {
+      get() { return this.$store.state.search.currentArticle; },
+      set(val) { this.updateCurrentArticle(val); },
+    },
     startTime: {
       get() { return this.$store.state.search.startTime; },
       set(val) { this.updateSearchStartTime(val); },
@@ -87,6 +97,7 @@ export default {
   },
   methods: {
     ...mapActions([
+      'updateCurrentArticle',
       'updateSearchStartTime',
       'updateSearchEndTime',
       'updateSearchKeywords',

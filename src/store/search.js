@@ -7,11 +7,15 @@ const state = {
   keywords: ['Plastic', 'Bags'],
   tickers: ['Woolworths', 'WES'],
   results: [],
+  currentArticle: null,
   status: null,
   meta: null,
 };
 
 const actions = {
+  updateCurrentArticle({ commit }, article) {
+    commit('setCurrentArticle', article);
+  },
   updateSearchStartTime({ commit }, time) {
     commit('setSearchStartTime', time);
   },
@@ -32,6 +36,7 @@ const actions = {
     const url = `/search?topics=${keywords}&start_date=${startTime}&end_date=${endTime}&companyids=${tickers}`;
     commit('setSearchStatus', 'fetching');
     commit('setSearchMeta', null);
+    commit('setCurrentArticle', null);
     http.get(url)
       .then((response) => {
         commit('setSearchResults', response.data.data);
@@ -48,6 +53,9 @@ const actions = {
 };
 
 const mutations = {
+  setCurrentArticle(state, article) {
+    state.currentArticle = article;
+  },
   setSearchStartTime(state, time) {
     state.startTime = time;
   },
@@ -72,6 +80,7 @@ const mutations = {
 };
 
 const getters = {
+  getCurrentArticle: state => state.currentArticle,
   getSearchStartTime: state => state.startTime,
   getSearchEndTime: state => state.endTime,
   getSearchKeywords: state => state.keywords,
