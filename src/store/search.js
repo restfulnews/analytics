@@ -48,6 +48,8 @@ const actions = {
         commit('setSearchMeta', {
           elapsedTime: response.data.elapsedTime,
           companies: response.data.companies,
+          keywords: state.keywords,
+          tickers: state.tickers,
         });
       })
       .catch((error) => {

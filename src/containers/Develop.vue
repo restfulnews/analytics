@@ -86,6 +86,7 @@
             <generated-website
               v-if="getSearchMeta"
               :webdata="getSearchMeta"
+              :articles="getSearchResults"
             />
           </div>
         </div>
@@ -119,6 +120,7 @@
           <generated-website
             v-if="getSearchMeta"
             :webdata="getSearchMeta"
+            :articles="getSearchResults"
           />
         </div>
       </md-step>

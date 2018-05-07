@@ -5,6 +5,27 @@
         <p>Report Details</p>
       </div>
       <div class="message-body">
+        <h1 class="md-title custom-table">Request Details</h1>
+        <table class="custom-table table is-bordered">
+            <tr>
+                <td><b>Topics</b></td>
+                <td v-for="t in webdata.keywords" :key="t">
+                  {{t}}
+                </td>
+            </tr>
+            <tr>
+                <td><b>Companies</b></td>
+                <td v-for="t in webdata.tickers" :key="t">
+                  {{t}}
+                </td>
+            </tr>
+            <tr>
+                <td><b>Build time</b></td>
+                <td>
+                  {{webdata.elapsedTime}}s
+                </td>
+            </tr>
+        </table>
         <md-table
           v-model="webdata.companies"
           md-sort="name"
@@ -48,20 +69,33 @@
         />
       </div>
     </div>
+    <div>
+      <br>
+      <h1 class="md-title custom-table">Company Timeline</h1>
+      <graph-card
+        :tickers="webdata.tickers"
+        :results="articles"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import FakeCompanyChart from '@/components/FakeCompanyChart';
+import GraphCard from '@/components/GraphCard';
 
 export default {
   name: 'GeneratedWebsite',
-  props: ['webdata'],
+  props: ['webdata', 'articles'],
   components: {
     'fake-company-chart': FakeCompanyChart,
+    'graph-card': GraphCard,
   },
 };
 </script>
 
 <style scoped>
+.custom-table {
+  margin-left: 20px;
+}
 </style>
