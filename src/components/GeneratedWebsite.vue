@@ -75,6 +75,7 @@
       <graph-card
         :tickers="webdata.tickers"
         :results="articles"
+        :webdata="webdata"
       />
     </div>
   </div>

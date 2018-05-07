@@ -1,8 +1,9 @@
 <template>
   <div v-if="checkResults(results) === true">
     <timeline
-        v-bind:results="results"
-        v-bind:tickers="tickers"
+      v-bind:results="results"
+      v-bind:tickers="tickers"
+      v-bind:webdata="webdata"
     />
   </div>
 </template>
@@ -15,7 +16,7 @@ export default {
   components: {
     timeline: Timeline,
   },
-  props: ['tickers', 'results'],
+  props: ['tickers', 'results', 'webdata'],
   methods: {
     checkResults(raw) {
       if (raw.length < 1) {

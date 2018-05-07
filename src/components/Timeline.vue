@@ -1,15 +1,18 @@
 <template>
   <div class="timeline">
     <ul>
-      <div v-for="ticker in tickers" :key="ticker">
+      <div v-for="company in webdata.companies" :key="company.name">
         <li>
-          <span class="title-eyebrow">{{ticker}}</span>
+          <span class="title-eyebrow">{{company.name}}</span>
         </li>
-        <div v-for="date in getDates(getData(results, ticker))" :key="date">
+        <div v-for="date in getDates(getCompanyArticles(results, company.ticker))" :key="date">
           <li>
             <span class="big-eyebrow">{{date}}</span>
           </li>
-          <div v-for="result in getData(dateFilter(results, date), ticker)" :key="result">
+          <div
+            v-for="result in getCompanyArticles(dateFilter(results, date), company.ticker)"
+            :key="result.abstract"
+          >
             <li>
               <span class="eyebrow">{{formatTime(result.publishedAt)}}</span>
               <div class="block">
@@ -27,18 +30,18 @@
 <script>
 export default {
   name: 'Timeline',
-  props: ['results', 'tickers'],
+  props: ['results', 'tickers', 'webdata'],
   methods: {
-    getData(raw, companyname) {
-      const arrayLength = raw.length;
-      const data = [];
-      for (let i = 0; i < arrayLength; i += 1) {
-        const singleData = (raw[i]);
-        if (singleData.title.toLowerCase().includes(companyname.toLowerCase())) {
-          data.push(singleData);
-        }
-      }
-      return data.sort((a, b) => (new Date(a.publishedAt) - new Date(b.publishedAt)));
+    getCompanyArticles(results, ticker) {
+      const found = [];
+      results.forEach((article) => {
+        article.companies && article.companies.forEach((company) => {
+          if (ticker === company.ticker) {
+            found.push(article);
+          }
+        });
+      });
+      return found.sort((a, b) => (new Date(a.publishedAt) - new Date(b.publishedAt)));
     },
     getDates(raw) {
       const dates = [];
