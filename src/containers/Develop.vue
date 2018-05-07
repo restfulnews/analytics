@@ -48,6 +48,16 @@
                     <label>End time</label>
                   </md-datepicker>
                 </div>
+                <div class="md-layout-item">
+                  <h4>Limit results to <span class="limit">{{limit}}</span> articles.</h4>
+                  <input
+                    step="1"
+                    min="0"
+                    max="100"
+                    type="range"
+                    v-model="limit"
+                  >
+                </div>
               </div>
               <md-button
                 class="md-raised md-default search-btn"
@@ -73,62 +83,44 @@
               text="Refining results..."
               v-if="getSearchStatus == 'fetching'"
             />
-            <article class="message" v-if="getSearchMeta">
-              <div class="message-header">
-                <p>Report Details</p>
-              </div>
-              <div class="message-body">
-                <md-table
-                  v-model="getSearchMeta.companies"
-                  md-sort="name"
-                  md-sort-order="asc"
-                  md-card
-                >
-                  <md-table-toolbar>
-                    <h1 class="md-title">Companies</h1>
-                  </md-table-toolbar>
-                  <md-table-row slot="md-table-row" slot-scope="{ item }">
-                    <md-table-cell md-label="Company" md-sort-by="name">
-                      {{ item.name }}
-                    </md-table-cell>
-                    <md-table-cell md-label="Reuters Ticker" md-numeric>
-                      {{ item.ticker }}
-                    </md-table-cell>
-                    <md-table-cell md-label="Website" md-sort-by="email">
-                      <a :href="item.websiteUrl" target="_blank">
-                        {{ item.websiteUrl }}
-                      </a>
-                    </md-table-cell>
-                    <md-table-cell md-label="PermID" md-sort-by="gender">
-                      <a :href="item.permidUrl" target="_blank">
-                        {{ item.permidUrl }}
-                      </a>
-                    </md-table-cell>
-                  </md-table-row>
-                </md-table>
-              </div>
-            </article>
-            <div v-if="getSearchMeta">
-              <div v-for="company in getSearchMeta.companies" :key="company.ticker">
-                <br>
-                <h1 class="subtitle is-4 loading-title">
-                  {{company.name}}
-                  <small>({{company.ticker}})</small>
-                </h1>
-                <fake-company-chart
-                  :name="company.name"
-                  :ticker="company.ticker"
-                />
-              </div>
-            </div>
+            <generated-website
+              v-if="getSearchMeta"
+              :webdata="getSearchMeta"
+            />
           </div>
         </div>
       </md-step>
       <md-step id="third" md-label="Generate">
-        <processing-chart
-          text="Building website..."
-          v-if="getSearchStatus == 'fetching'"
-        />
+        <div class="container">
+          <md-card
+            class="card"
+            v-if="getSearchMeta"
+          >
+            <div>
+              <md-field>
+                <label>IFRAME</label>
+                <md-input v-model="iframe"></md-input>
+                <span class="md-helper-text">
+                  Embed this iframe tag to your website.
+                </span>
+              </md-field>
+              <md-button
+                class="md-raised md-primary search-btn"
+                @click="generate()"
+              >
+                Rebuild Website
+              </md-button>
+            </div>
+          </md-card>
+          <processing-chart
+            text="Building website..."
+            v-if="getSearchStatus == 'fetching'"
+          />
+          <generated-website
+            v-if="getSearchMeta"
+            :webdata="getSearchMeta"
+          />
+        </div>
       </md-step>
     </md-steppers>
     <auth/>
@@ -140,17 +132,17 @@ import { mapGetters, mapActions } from 'vuex';
 import Auth from '@/containers/Auth';
 import FeatureUnavailable from '@/components/FeatureUnavailable';
 import ProcessingBox from '@/components/ProcessingBox';
-import FakeCompanyChart from '@/components/FakeCompanyChart';
 import NewsCard from '@/components/NewsCard';
+import GeneratedWebsite from '@/components/GeneratedWebsite';
 
 export default {
-  name: 'Analyse',
+  name: 'Develop',
   components: {
     auth: Auth,
     'feature-unavailable': FeatureUnavailable,
     'processing-chart': ProcessingBox,
     'news-card': NewsCard,
-    'fake-company-chart': FakeCompanyChart,
+    'generated-website': GeneratedWebsite,
   },
   data() {
     return {
@@ -159,6 +151,7 @@ export default {
       second: false,
       third: false,
       secondStepError: null,
+      iframe: '<iframe width="100%" src="http://api.restfulnews.com/website/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhYjg0NDJlOTQ4NWI4MjllYzhjNDEwZSIsImlhdCI6MTUyNTY4MDE0N30.JIgC5_BnmmoMdqzChG4YmqeEMNdjOklxrJvx6IpM6TU"></iframe>',
     };
   },
   computed: {
@@ -174,6 +167,10 @@ export default {
     endTime: {
       get() { return this.$store.state.search.endTime; },
       set(val) { this.updateSearchEndTime(val); },
+    },
+    limit: {
+      get() { return this.$store.state.search.limit; },
+      set(val) { this.updateSearchLimit(val); },
     },
     keywords: {
       get() { return this.$store.state.search.keywords; },
@@ -191,6 +188,7 @@ export default {
       'updateSearchKeywords',
       'updateSearchTickers',
       'updateSearchResults',
+      'updateSearchLimit',
       'updateAppTitle',
     ]),
     setDone(id, index) {
@@ -207,7 +205,7 @@ export default {
     },
   },
   mounted() {
-    this.updateAppTitle('Analyse');
+    this.updateAppTitle('Develop');
   },
 };
 </script>
@@ -229,5 +227,12 @@ export default {
 .news-card {
   background-color: white;
   margin-top: 2em;
+}
+.card {
+  padding: 2em;
+  margin-bottom: 2em;
+}
+.limit {
+  color: blue;
 }
 </style>

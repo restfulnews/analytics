@@ -39,10 +39,20 @@
         :key="result.fingerprint"
       />
     </div>
-    <div class="column is-main-content is-hidden-mobile">
+    <div class="column is-main-content is-hidden-mobile article-view">
       <processing-chart
         text="Retrieving articles..."
-        v-if="getSearchStatus == 'fetching'"/>
+        v-if="getSearchStatus === 'fetching'"
+      />
+      <div v-if="getSearchViewUrl && getSearchStatus !== 'fetching'">
+        <iframe :src="getSearchViewUrl"
+          width="100%"
+          class="iframe"
+        />
+      </div>
+      <empty-article
+        v-if="!getSearchViewUrl && getSearchStatus !== 'fetching'"
+      />
     </div>
     <auth />
   </div>
@@ -54,6 +64,7 @@ import Auth from '@/containers/Auth';
 import FeatureUnavailable from '@/components/FeatureUnavailable';
 import NewsCard from '@/components/NewsCard';
 import ProcessingBox from '@/components/ProcessingBox';
+import EmptyArticle from '@/components/EmptyArticle';
 
 export default {
   name: 'Explore',
@@ -62,11 +73,13 @@ export default {
     'news-card': NewsCard,
     'feature-unavailable': FeatureUnavailable,
     'processing-chart': ProcessingBox,
+    'empty-article': EmptyArticle,
   },
   computed: {
     ...mapGetters([
       'getSearchResults',
       'getSearchStatus',
+      'getSearchViewUrl',
     ]),
     startTime: {
       get() { return this.$store.state.search.startTime; },
@@ -111,6 +124,12 @@ export default {
 }
 .columns.is-fullheight .column {
   overflow-y: auto;
+}
+.article-view {
+  overflow-y: hidden !important;
+}
+.iframe {
+  height: 100vh;
 }
 .news-search {
   padding: 1em;

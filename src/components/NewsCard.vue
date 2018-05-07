@@ -20,7 +20,10 @@
     <md-card-expand>
       <md-card-actions md-alignment="space-between">
         <div>
-          <md-button class="md-icon-button">
+          <md-button
+            @click="updateSearchViewUrl(article.url)"
+            class="md-icon-button"
+          >
             <md-icon>pageview</md-icon>
           </md-button>
           <!-- <md-button class="md-icon-button">
@@ -37,11 +40,15 @@
 
 <script>
 import fecha from 'fecha';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'NewsCard',
   props: ['article'],
   methods: {
+    ...mapActions([
+      'updateSearchViewUrl',
+    ]),
     formatDate(date) {
       return fecha.format(new Date(date), 'dddd MMMM Do, YYYY');
     },
