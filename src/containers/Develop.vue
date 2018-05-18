@@ -98,18 +98,16 @@
             v-if="getSearchMeta"
           >
             <div>
-              <md-field>
-                <label>IFRAME</label>
-                <md-input v-model="iframe"></md-input>
-                <span class="md-helper-text">
-                  Embed this iframe tag to your website.
-                </span>
-              </md-field>
               <md-button
                 class="md-raised md-primary search-btn"
                 @click="generate()"
               >
                 Rebuild Website
+              </md-button>
+              <md-button
+                class="md-raised md-accent search-btn"
+              >
+                Download Website
               </md-button>
             </div>
           </md-card>

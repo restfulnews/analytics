@@ -2,6 +2,33 @@
   <div id="GeneratedWebsite">
     <article class="message">
       <div class="message-header">
+        <p>Customize report</p>
+      </div>
+      <div class="message-body">
+            <md-field>
+              <label for="colour">Colour</label>
+              <md-select v-model="colour" name="colour" id="colour">
+                <md-option value="red">Red</md-option>
+                <md-option value="blue">Blue</md-option>
+              </md-select>
+            </md-field>
+
+            <md-field md-inline>
+              <label>Website Name</label>
+              <md-input v-model="inline"></md-input>
+            </md-field>
+
+            <md-field :class="messageClass">
+              <label>Report Bio</label>
+              <md-textarea v-model="textarea" required></md-textarea>
+              <span class="md-helper-text">Helper text</span>
+              <span class="md-error">There is an error</span>
+            </md-field>
+      </div>
+    </article>
+    
+    <article class="message">
+      <div class="message-header">
         <p>Report Details</p>
       </div>
       <div class="message-body">
@@ -63,10 +90,23 @@
           {{company.name}}
           <small>({{company.ticker}})</small>
         </h1>
-        <fake-company-chart
-          :name="company.name"
-          :ticker="company.ticker"
-        />
+        <div class="md-layout">
+          <div class="md-layout-item md-size-75">
+             <fake-company-chart
+                :name="company.name"
+                :ticker="company.ticker"
+              />
+          </div>
+          <div class="md-layout-item">
+            <md-checkbox v-model="array" value="1">Add to website</md-checkbox>
+            <br/>
+            <md-checkbox v-model="array" value="1">Add description</md-checkbox>
+            <md-field>
+              <label>Write description to appear on website</label>
+              <md-textarea v-model="textarea" md-counter="160"></md-textarea>
+            </md-field>
+          </div>
+        </div>    
       </div>
     </div>
     <div>
