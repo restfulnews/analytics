@@ -1,4 +1,6 @@
 /* eslint-disable no-shadow */
+import axios from 'axios';
+import fecha from 'fecha';
 
 const state = {
   name: null,
@@ -11,14 +13,10 @@ const state = {
   graphs: [],
   previewUrl: null,
   downloadUrl: null,
+  status: null,
 };
 
 const actions = {
-  updateDevelopName({ commit }) {
-    // hash this hash
-    const hash = `${state.title}-${state.description}`;
-    commit('setDevelopName', hash);
-  },
   updateDevelopTitle({ commit }, title) {
     commit('setDevelopTitle', title);
   },
@@ -45,6 +43,46 @@ const actions = {
   },
   updateDevelopDownloadUrl({ commit }, downUrl) {
     commit('setDevelopDownloadUrl', downUrl);
+  },
+  generateWebsite({ commit, state }, payload) {
+    const { articles, charts } = payload;
+    const reformatedArticles = articles.map(article => ({
+      title: article.title,
+      image: article.thumbnail,
+      snippet: article.abstract,
+      date: fecha.format(new Date(article.publishedAt), 'dddd MMMM Do, YYYY'),
+      link: article.url,
+    }));
+    const reformatedCharts = charts.map(chart => ({
+      name: chart.ticker,
+      labels: chart.labels,
+      stock: chart.datasets[0].data,
+      tweets: chart.datasets[1].data,
+    }));
+    const hash = Math.random().toString(36).substring(2, 15)
+      + Math.random().toString(36).substring(2, 15);
+    commit('setDevelopName', hash);
+    commit('setDevelopStatus', 'fetching');
+    axios
+      .post(`${process.env.ANALYTICS_API_URI}/website?name=${state.name}`,
+        {
+          title: state.title,
+          description: state.description,
+          email: state.email,
+          pn: state.phone,
+          colour: state.color,
+          news: reformatedArticles,
+          graphs: reformatedCharts,
+        },
+      )
+      .then(() => {
+        commit('setDevelopStatus', 'fetched');
+        commit('setDevelopPreviewUrl', `${process.env.ANALYTICS_API_URI}/websiteview?name=${state.name}`);
+        commit('setDevelopDownloadUrl', `${process.env.ANALYTICS_API_URI}/websitedownload?name=${state.name}`);
+      })
+      .catch((err) => {
+        commit('setDevelopStatus', `error: ${err}`);
+      });
   },
 };
 
@@ -79,6 +117,9 @@ const mutations = {
   setDevelopDownloadUrl(state, downloadUrl) {
     state.downloadUrl = downloadUrl;
   },
+  setDevelopStatus(state, status) {
+    state.status = status;
+  },
 };
 
 const getters = {
@@ -92,6 +133,7 @@ const getters = {
   getDevelopGraphs: state => state.graphs,
   getDevelopPreviewUrl: state => state.previewUrl,
   getDevelopDownloadUrl: state => state.downloadUrl,
+  getDevelopStatus: state => state.status,
 };
 
 export default {
