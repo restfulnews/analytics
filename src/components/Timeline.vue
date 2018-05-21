@@ -35,11 +35,13 @@ export default {
     getCompanyArticles(results, ticker) {
       const found = [];
       results.forEach((article) => {
-        article.companies && article.companies.forEach((company) => {
-          if (ticker === company.ticker) {
-            found.push(article);
-          }
-        });
+        if (article.companies) {
+          article.companies.forEach((company) => {
+            if (ticker === company.ticker) {
+              found.push(article);
+            }
+          });
+        }
       });
       return found.sort((a, b) => (new Date(a.publishedAt) - new Date(b.publishedAt)));
     },

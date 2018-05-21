@@ -83,44 +83,62 @@
               text="Refining results..."
               v-if="getSearchStatus == 'fetching'"
             />
-            <generated-website
+            <customise-website
               v-if="getSearchMeta"
               :webdata="getSearchMeta"
               :articles="getSearchResults"
+              :chartdata="getSearchCharts"
             />
           </div>
         </div>
       </md-step>
       <md-step id="third" md-label="Generate">
-        <div class="container">
-          <md-card
-            class="card"
-            v-if="getSearchMeta"
-          >
-            <div>
+        <md-toolbar v-if="getSearchMeta">
+          <div class="md-toolbar-row">
               <md-button
                 class="md-raised md-primary search-btn"
                 @click="generate()"
               >
-                Rebuild Website
+                Rebuild
               </md-button>
               <md-button
-                class="md-raised md-accent search-btn"
+                class="md-raised md-info search-btn"
               >
-                Download Website
+                Download
               </md-button>
-            </div>
-          </md-card>
-          <processing-chart
-            text="Building website..."
-            v-if="getSearchStatus == 'fetching'"
-          />
-          <generated-website
-            v-if="getSearchMeta"
-            :webdata="getSearchMeta"
-            :articles="getSearchResults"
-          />
-        </div>
+              <pre></pre>
+            <md-field md-clearable>
+              <label>Email your generated website.</label>
+              <md-input v-model="email"></md-input>
+            </md-field>
+            <md-button>
+              <md-icon>email</md-icon>
+            </md-button>
+            <md-field md-clearable>
+              <label>Send an SMS.</label>
+              <md-input v-model="phone"></md-input>
+            </md-field>
+            <md-button>
+              <md-icon>sms</md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
+        <processing-chart
+          text="Building website..."
+          v-if="getSearchStatus == 'fetching'"
+        /><br>
+        <md-tabs class="md-primary" v-if="getSearchMeta">
+          <md-tab id="tab-home" md-label="Website Preview" md-icon="remove_red_eye">
+            Test
+          </md-tab>
+          <md-tab id="tab-pages" md-label="Customise Website" md-icon="assignment">
+            <customise-website
+              :webdata="getSearchMeta"
+              :articles="getSearchResults"
+              :chartdata="getSearchCharts"
+            />
+          </md-tab>
+        </md-tabs>
       </md-step>
     </md-steppers>
     <auth/>
@@ -133,7 +151,7 @@ import Auth from '@/containers/Auth';
 import FeatureUnavailable from '@/components/FeatureUnavailable';
 import ProcessingBox from '@/components/ProcessingBox';
 import NewsCard from '@/components/NewsCard';
-import GeneratedWebsite from '@/components/GeneratedWebsite';
+import CustomiseWebsite from '@/containers/CustomiseWebsite';
 
 export default {
   name: 'Develop',
@@ -142,7 +160,7 @@ export default {
     'feature-unavailable': FeatureUnavailable,
     'processing-chart': ProcessingBox,
     'news-card': NewsCard,
-    'generated-website': GeneratedWebsite,
+    'customise-website': CustomiseWebsite,
   },
   data() {
     return {
@@ -159,6 +177,9 @@ export default {
       'getSearchResults',
       'getSearchStatus',
       'getSearchMeta',
+      'getSearchCharts',
+      'getDevelopPreviewUrl',
+      'getDevelopDownloadUrl',
     ]),
     startTime: {
       get() { return this.$store.state.search.startTime; },
@@ -180,6 +201,15 @@ export default {
       get() { return this.$store.state.search.tickers; },
       set(val) { this.updateSearchTickers(val); },
     },
+    /* develop */
+    email: {
+      get() { return this.$store.state.develop.email; },
+      set(val) { this.updateDevelopEmail(val); },
+    },
+    phone: {
+      get() { return this.$store.state.develop.phone; },
+      set(val) { this.updateDevelopPhone(val); },
+    },
   },
   methods: {
     ...mapActions([
@@ -190,6 +220,8 @@ export default {
       'updateSearchResults',
       'updateSearchLimit',
       'updateAppTitle',
+      'updateDevelopEmail',
+      'updateDevelopPhone',
     ]),
     setDone(id, index) {
       this[id] = true;
@@ -234,5 +266,7 @@ export default {
 }
 .limit {
   color: blue;
+}
+.left-right-padded {
 }
 </style>
