@@ -107,6 +107,11 @@
               >
                 Download
               </md-button>
+              <md-button
+                class="md-raised md-info search-btn"
+              >
+                Models
+              </md-button>
               <pre></pre>
             <md-field md-clearable>
               <label>Share via email.</label>
