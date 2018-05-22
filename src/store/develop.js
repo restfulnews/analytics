@@ -8,7 +8,7 @@ const state = {
   title: null,
   description: null,
   email: 'example@example.com',
-  phone: '0470234523',
+  phone: '0424264910',
   news: [],
   graphs: [],
   previewUrl: null,

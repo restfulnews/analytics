@@ -4,7 +4,7 @@ import fecha from 'fecha';
 import http from '../utils/http';
 
 const state = {
-  startTime: new Date(new Date().setFullYear(new Date().getFullYear() - 5)),
+  startTime: new Date(2018, 0, 1),
   endTime: new Date(),
   keywords: ['Plastic', 'Bags'],
   tickers: ['Woolworths', 'WES'],
