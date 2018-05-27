@@ -78,6 +78,19 @@ const actions = {
     if (!jwt) {
       commit('setAuthLoginStatus', false);
     } else {
+      console.log('JWT Found!');
+      axios.get(`${process.env.API_URI}/users/me`, {
+        headers: { Authorization: `Bearer ${jwt}` },
+      }).then((response) => {
+        commit('setAuthLoginStatus', true);
+        commit('setAuthEmail', response.data.email);
+        commit('setAuthName', response.data.name);
+        commit('setJwt', jwt);
+        setCookie('jwt', jwt, 30);
+      }).catch((error) => {
+        commit('setAuthLoginStatus', false);
+        commit('setErrorMsg', error.response.data[0].message || error.message);
+      });
       commit('setAuthLoginStatus', true);
     }
   },
