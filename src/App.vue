@@ -57,8 +57,9 @@ export default {
   },
   data: () => ({
     menu: [
-      { label: 'Develop', to: 'develop', icon: 'assessment' },
       { label: 'Explore', to: 'explore', icon: 'art_track' },
+      { label: 'Develop', to: 'develop', icon: 'assessment' },
+      { label: 'Projects', to: 'projects', icon: 'perm_media' },
       { label: 'Account', to: 'account', icon: 'account_circle' },
     ],
   }),

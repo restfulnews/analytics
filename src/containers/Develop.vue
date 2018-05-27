@@ -245,9 +245,11 @@ export default {
       this.setDone('first', 'second');
     },
     generate() {
+      console.log(this.$store.state.auth.email);
       this.generateWebsite({
         articles: this.getSearchResults,
         charts: this.getSearchCharts,
+        email: this.$store.state.auth.email,
       });
       this.setDone('second', 'third');
     },

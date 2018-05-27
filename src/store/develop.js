@@ -45,7 +45,7 @@ const actions = {
     commit('setDevelopDownloadUrl', downUrl);
   },
   generateWebsite({ commit, state }, payload) {
-    const { articles, charts } = payload;
+    const { articles, charts, email } = payload;
     const reformatedArticles = articles.map(article => ({
       title: article.title,
       image: article.thumbnail,
@@ -64,7 +64,7 @@ const actions = {
     commit('setDevelopName', hash);
     commit('setDevelopStatus', 'fetching');
     axios
-      .post(`${process.env.ANALYTICS_API_URI}/website?name=${state.name}`,
+      .post(`${process.env.ANALYTICS_API_URI}/website?name=${state.name}&user=${email}`,
         {
           title: state.title,
           description: state.description,
