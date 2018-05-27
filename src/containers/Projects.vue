@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import Auth from '@/containers/Auth';
 import { mapActions } from 'vuex';
 import FeatureUnavailable from '@/components/FeatureUnavailable';
@@ -32,14 +33,27 @@ export default {
   },
   data() {
     return {
-      stuff: 'yep',
+      userdetails: null,
     };
   },
-  methods: mapActions([
+  methods: {
+    ...mapActions([
     'updateAppTitle',
-  ]),
+    ]),
+    getProjects() {
+      axios
+        .get(`${process.env.ANALYTICS_API_URI}/userdetails?user=${this.$store.state.auth.email}`)
+        .then((response) => {
+          this.userdetails = response.data;
+          // Oliver - do thou wilt
+          // access {{userdata.model}} from template
+         })
+        .catch(err => console.log(err));
+    }
+  },
   mounted() {
     this.updateAppTitle('My Projects');
+    this.getProjects();
   },
 };
 </script>

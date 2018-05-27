@@ -137,7 +137,7 @@ export default {
       'updateDevelopTitle',
       'updateDevelopDescription',
     ]),
-  }
+  },
 };
 </script>
 
