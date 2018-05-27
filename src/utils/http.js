@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { getCookie } from './cookie';
 
-// const jwt = getCookie('jwt') ? getCookie('jwt') : process.env.DODGY_TOKEN;
-
-const jwt = getCookie('jwt');
+const jwt = getCookie('jwt') ? getCookie('jwt') : process.env.DODGY_TOKEN;
 
 const http = axios.create({
   baseURL: `${process.env.API_URI}/`,

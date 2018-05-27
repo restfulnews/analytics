@@ -6,20 +6,20 @@
         <md-input v-model="apiUrl" readonly disabled></md-input>
       </md-field>
       <md-field>
-        <label>API key</label>
+        <label>API Token</label>
         <md-input v-model="api" readonly disabled></md-input>
-        <span class="md-helper-text">note: this is regenerated every 30 days.</span>
+        <span class="md-helper-text">note: this token is regenerated every 30 days.</span>
       </md-field>
     </md-card>
     <md-card class="card">
       <div>
         <md-field>
-          <label>First name</label>
-          <md-input v-model="first"></md-input>
+          <label>Full name</label>
+          <md-input v-model="name"></md-input>
         </md-field>
         <md-field>
-          <label>Last name</label>
-          <md-input v-model="last" readonly></md-input>
+          <label>Email</label>
+          <md-input v-model="email" readonly></md-input>
         </md-field>
         <md-field>
           <label>Usage type</label>
@@ -43,6 +43,7 @@
 import Auth from '@/containers/Auth';
 import { mapActions } from 'vuex';
 import FeatureUnavailable from '@/components/FeatureUnavailable';
+import { getCookie } from '../utils/cookie';
 
 export default {
   name: 'Account',
@@ -53,11 +54,11 @@ export default {
   data() {
     return {
       apiUrl: 'http://api.restfulnews.com/',
-      first: 'Bob',
-      last: 'Cutlass',
-      api: 'CASDFAS89YFASDFHGDASJ2DA',
+      name: this.$store.state.auth.name,
+      email: this.$store.state.auth.email,
+      api: getCookie('jwt'),
       usage: 'Education',
-      bio: 'This is just a test user.',
+      bio: 'None.',
     };
   },
   methods: mapActions([
