@@ -4,6 +4,7 @@
       :chart-data="chartdata"
       :options="chartOptions"
     />
+    
   </md-card>
 </template>
 
