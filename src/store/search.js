@@ -71,7 +71,7 @@ const actions = {
                   tweetsRes = res2.data.data;
                 });
               const prices = await res.data.map(s => parseFloat(s.price));
-              let tweets = await tweetsRes.map(s =>  parseFloat(s['tweet count']));
+              let tweets = await tweetsRes.map(s => parseFloat(s['tweet count']));
               tweets = tweets.splice(Math.abs(tweets.length - prices.length), tweets.length - 1);
               const chartObj = await {
                 ticker: company.ticker,

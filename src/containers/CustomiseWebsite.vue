@@ -24,7 +24,7 @@
             </md-field>
           </div>
         </div>
-        <md-field :class="messageClass">
+        <md-field>
           <label>Site Description</label>
           <md-textarea v-model="description" required></md-textarea>
           <span class="md-helper-text">Build Time ~ {{webdata.elapsedTime}}s</span>

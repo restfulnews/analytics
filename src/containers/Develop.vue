@@ -108,7 +108,16 @@
                 Download
               </md-button>
               <pre></pre>
+              <md-field>
+                <label>Choose Company</label>
+                <md-select v-model="selectedCompany" name="colors" id="colors">
+                  <md-option v-for="item in allCompanies" :key="item.name" :value="item">
+                    {{item.name}}
+                  </md-option>
+                </md-select>
+              </md-field>
               <md-button
+                @click="generateModels"
                 class="md-raised md-info search-btn"
               >
                 Models
@@ -181,6 +190,7 @@ export default {
       third: false,
       secondStepError: null,
       iframe: '<iframe width="100%" src="http://api.restfulnews.com/website/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhYjg0NDJlOTQ4NWI4MjllYzhjNDEwZSIsImlhdCI6MTUyNTY4MDE0N30.JIgC5_BnmmoMdqzChG4YmqeEMNdjOklxrJvx6IpM6TU"></iframe>',
+      selectedCompany: null,
     };
   },
   computed: {
@@ -192,6 +202,7 @@ export default {
       'getSearchCharts',
       'getDevelopPreviewUrl',
       'getDevelopDownloadUrl',
+      'getDevelopName',
     ]),
     startTime: {
       get() { return this.$store.state.search.startTime; },
@@ -221,6 +232,9 @@ export default {
     phone: {
       get() { return this.$store.state.develop.phone; },
       set(val) { this.updateDevelopPhone(val); },
+    },
+    allCompanies() {
+      return this.getSearchMeta.companies;
     },
   },
   methods: {
@@ -266,6 +280,17 @@ export default {
       axios
         .get(`${process.env.ANALYTICS_API_URI}/email?to=${this.email}&message=${message}&heading=${heading}`)
         .then(() => { alert('Email sent!'); })
+        .catch(err => console.log(err));
+    },
+    generateModels() {
+      console.log(this.selectedCompany.ticker);
+      const companyid = this.selectedCompany.ticker.split('.')[0].toLowerCase();
+      const companyname = this.selectedCompany.shortName;
+      const topics = this.keywords.join(' ').toLowerCase();
+      const uri = `${process.env.ANALYTICS_API_URI}/datarobot?name=${this.getDevelopName}&companyid=${companyid}&companyname=${companyname}&topics=${topics}&user=${this.$store.state.auth.email}`;
+      alert('Your models have started generating.');
+      axios
+        .get(uri)
         .catch(err => console.log(err));
     },
   },
