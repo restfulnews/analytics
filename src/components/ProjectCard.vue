@@ -39,7 +39,9 @@
 
         </div>
       </div>
-          <md-button @click="predict()" class="md-primary">Predict</md-button>
+          <md-button @click="predict(project.projectid, modelid, stock, numtweets, date)" class="md-primary">Predict</md-button>
+      Prediction : {{result}}
+    
     </article>
     </md-card>
 
@@ -78,13 +80,13 @@ export default {
     modelid : "",
     stock : 0, 
     numtweets : 1,
-    date : new Date(),
-    result : null
+    date : null,
+    result : 0,
   },
   methods: {
-    predict(){
+    predict(projectid, modelid, stock, numtweets, date){
       axios
-      .post(`${process.env.ANALYTICS_API_URI}/predict?projectid=${project.projectid}&modelid=${modelid}`,
+      .post(`${process.env.ANALYTICS_API_URI}/predict?projectid=${projectid}&modelid=${modelid}`,
         {
           "date" : date,
           "prev" : stock,
@@ -92,10 +94,11 @@ export default {
         },
       )
       .then((payload) => {
-        this.result = payload
+        this.result = payload.data.prediction
+        console.log(payload)
       })
       .catch((err) => {
-        commit('setDevelopStatus', `error: ${err}`);
+        console.log(err)
       });
     }
     
