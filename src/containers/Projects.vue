@@ -9,13 +9,11 @@
         <md-button class="md-primary md-raised" to="develop">Generate a website</md-button>
         </md-empty-state>
       </div>
-      <div v-if="userdetails.websites.length >= 1">
         <website-card
           v-for="website in userdetails.websites"
           v-bind:website="website"
           :key="website.name"
         />
-      </div>
     </md-tab>
     <md-tab id="tab-models" md-label="Models" md-icon="group_work">
       <div v-if="userdetails.projects.length < 1">
@@ -26,13 +24,11 @@
         <md-button class="md-primary md-raised" to="develop">Generate a Project</md-button>
       </md-empty-state>
       </div>
-      <div v-if="userdetails.projects.length >= 1">
         <project-card
           v-for="project in userdetails.projects"
           v-bind:project="project"
           :key="project.projectid"
         />
-      </div>
     </md-tab>
   </md-tabs>
 </template>
@@ -69,7 +65,6 @@ export default {
         .get(`${process.env.ANALYTICS_API_URI}/userdetails?user=${this.$store.state.auth.email}`)
         .then((response) => {
           this.userdetails = response.data;
-          console.log(this.userdetails.projects)
           // Oliver - do thou wilt
           // access {{userdata.model}} from template
          })
