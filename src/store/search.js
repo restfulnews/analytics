@@ -4,8 +4,8 @@ import fecha from 'fecha';
 import http from '../utils/http';
 
 const state = {
-  startTime: new Date(2018, 0, 1),
-  endTime: new Date(),
+  startTime: new Date(2018, 4, 22),
+  endTime: new Date(2018,4, 29),
   keywords: ['Plastic', 'Bags'],
   tickers: ['Woolworths', 'WES'],
   results: [],

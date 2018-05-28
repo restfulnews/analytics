@@ -4,7 +4,7 @@ import fecha from 'fecha';
 
 const state = {
   name: null,
-  color: null,
+  color: "Blue",
   title: null,
   description: null,
   email: 'example@example.com',
