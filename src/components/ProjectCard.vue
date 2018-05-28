@@ -39,6 +39,7 @@
 
         </div>
       </div>
+          <md-button @click="predict()" class="md-primary">Predict</md-button>
     </article>
     </md-card>
 
@@ -54,16 +55,12 @@
         <md-table-head>Model Name</md-table-head>
         <md-table-head>Model Parameters</md-table-head>
         <md-table-head>RMSE Score</md-table-head>
-        <md-table-head>Try</md-table-head>
       </md-table-row>
       <md-table-row v-for="model in project.models" v-bind:key="model['model id']">
         <md-table-cell md-numeric>{{model['model id']}}</md-table-cell>
         <md-table-cell>{{model['model name']}}</md-table-cell>
         <md-table-cell>{{model['model parameters']}}</md-table-cell>
         <md-table-cell>{{model['score']}}</md-table-cell>
-        <md-table-cell>
-          <md-button @click="setmodelid(model['model id'])" class="md-primary">Primary</md-button>
-        </md-table-cell>
       </md-table-row>
     </md-table>
     <br/>
@@ -72,6 +69,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'ProjectCard',
   props: ['project'],
@@ -80,9 +79,26 @@ export default {
     stock : 0, 
     numtweets : 1,
     date : new Date(),
+    result : null
   },
   methods: {
-    //got to do a mock post request here for getting the prediction
+    predict(){
+      axios
+      .post(`${process.env.ANALYTICS_API_URI}/predict?projectid=${project.projectid}&modelid=${modelid}`,
+        {
+          "date" : date,
+          "prev" : stock,
+          "tweet count": numtweets
+        },
+      )
+      .then((payload) => {
+        this.result = payload
+      })
+      .catch((err) => {
+        commit('setDevelopStatus', `error: ${err}`);
+      });
+    }
+    
   },
 };
 </script>
