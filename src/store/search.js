@@ -70,6 +70,9 @@ const actions = {
                 .then((res2) => {
                   tweetsRes = res2.data.data;
                 });
+              const prices = await res.data.map(s => parseFloat(s.price));
+              let tweets = await tweetsRes.map(s =>  parseFloat(s['tweet count']));
+              tweets = tweets.splice(Math.abs(tweets.length - prices.length), tweets.length - 1);
               const chartObj = await {
                 ticker: company.ticker,
                 labels: res.data.map(s => s.date),
@@ -79,14 +82,15 @@ const actions = {
                     backgroundColor: '#FF6384',
                     borderColor: '#FF6384',
                     fill: false,
-                    data: res.data.map(s => parseFloat(s.price)),
+                    data: prices,
                   },
                   {
                     label: 'Number of Related Tweets',
                     backgroundColor: '#4BC0C0',
                     borderColor: '#4BC0C0',
                     fill: false,
-                    data: tweetsRes.map(s => parseFloat(s['tweet count'])),
+                    // data: tweetsRes.map(s =>  { return parseFloat(s['tweet count']) > 0 ? parseFloat(s['tweet count']) : Math.floor(Math.random() * 11) }),
+                    data: tweets,
                   },
                 ],
               };
