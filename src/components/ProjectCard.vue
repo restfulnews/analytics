@@ -2,58 +2,62 @@
   <div>
     <md-card class="md-gutter">
       <article class="message is-primary">
-      <div class="message-header">
-        <p>Website Details</p>
-      </div>
-      <div class="message-body">
-        <div class="md-layout md-gutter">
-          <div class="md-layout-item">
-            <md-field>
-              <label>Model Id</label>
-              <md-input v-model="modelid"></md-input>
-            </md-field>
-          </div>
-          <div class="md-layout-item">
-            <md-field >
-              <label>Project Id</label>
-              <md-input disabled v-model="project.projectid"></md-input>
-            </md-field>
-          </div>
+        <div class="message-header">
+          <p>Model Parameters</p>
         </div>
-        <div class="md-layout md-gutter">
-          <div class="md-layout-item">
-            <md-field>
-              <label>Stock Price</label>
-              <md-input v-model="stock"></md-input>
-            </md-field>
+        <div class="message-body">
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item">
+              <md-field>
+                <label>Model Id</label>
+                <md-input v-model="modelid"></md-input>
+              </md-field>
+            </div>
+            <div class="md-layout-item">
+              <md-field >
+                <label>Project Id</label>
+                <md-input disabled v-model="project.projectid"></md-input>
+              </md-field>
+            </div>
           </div>
-          <div class="md-layout-item">
-            <md-field>
-              <label>Number Tweets</label>
-              <md-input v-model="numtweets"></md-input>
-            </md-field>
-          </div>
-          <div class="md-layout-item">
-            <md-datepicker v-model="date"/>
-          </div>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item">
+              <md-field>
+                <label>Stock Price</label>
+                <md-input v-model="stock"></md-input>
+              </md-field>
+            </div>
+            <div class="md-layout-item">
+              <md-field>
+                <label>Number Tweets</label>
+                <md-input v-model="numtweets"></md-input>
+              </md-field>
+            </div>
+            <div class="md-layout-item">
+              <md-datepicker v-model="date"/>
+            </div>
 
+          </div>
         </div>
-      </div>
-          <md-button @click="predict(project.projectid, modelid, stock, numtweets, date)" class="md-primary">Predict</md-button>
-      Prediction : {{result}}
-    
-    </article>
+        <div class="message-body">
+          <md-button @click="predict(project.projectid, modelid, stock, numtweets, date)"
+            class="md-raised md-primary">
+            Predict
+          </md-button>
+          <div v-if="result != 0" style="display: inline; font-size: 20px; background-color: white">
+            Prediction : {{result}}
+          </div>
+        </div>
+      </article>
     </md-card>
 
     <br/>
     <md-table md-card md-with-hover>
       <md-table-toolbar>
-        <h1 class="md-title">{{project.name}}</h1>
-        <h3 class="md-title">{{project.companyname}} and {{project.topics}}</h3>
-        <br/>
+        <h1 class="md-title" style="text-transform: capitalize;">{{project.companyname}} - {{project.topics}}</h1>
       </md-table-toolbar>
       <md-table-row>
-        <md-table-head md-numeric>Model Id</md-table-head>
+        <md-table-head>Model Id</md-table-head>
         <md-table-head>Model Name</md-table-head>
         <md-table-head>Model Parameters</md-table-head>
         <md-table-head>RMSE Score</md-table-head>
@@ -67,7 +71,7 @@
     </md-table>
     <br/>
   </div>
-  
+
 </template>
 
 <script>
@@ -76,32 +80,35 @@ import axios from 'axios';
 export default {
   name: 'ProjectCard',
   props: ['project'],
-  data : {
-    modelid : "",
-    stock : 0, 
-    numtweets : 1,
-    date : null,
-    result : 0,
+  data() {
+    return {
+      modelid : "",
+      stock : 12.3,
+      numtweets : 4,
+      date : null,
+      result : 0,
+    };
   },
   methods: {
     predict(projectid, modelid, stock, numtweets, date){
+      alert('We\'ve started processing your prediction request. This may take a while...')
       axios
       .post(`${process.env.ANALYTICS_API_URI}/predict?projectid=${projectid}&modelid=${modelid}`,
         {
-          "date" : date,
-          "prev" : stock,
-          "tweet count": numtweets
+          "date" : this.date,
+          "prev" : this.stock,
+          "tweet count": this.numtweets
         },
       )
-      .then((payload) => {
-        this.result = payload.data.prediction
-        console.log(payload)
+      .then((response) => {
+        this.result = response.data.prediction;
+        console.log(response)
       })
       .catch((err) => {
         console.log(err)
       });
     }
-    
+
   },
 };
 </script>

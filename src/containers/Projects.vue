@@ -3,9 +3,9 @@
     <md-tab id="tab-websites" md-label="Websites" md-icon="web">
       <div v-if="userdetails.websites.length < 1">
         <md-empty-state
-        md-icon="web"
-        md-label="Create your first website"
-        md-description="It seems like you don't have any saved websites yet.">
+          md-icon="web"
+          md-label="Create your first website"
+          md-description="It seems like you don't have any saved websites yet.">
         <md-button class="md-primary md-raised" to="develop">Generate a website</md-button>
         </md-empty-state>
       </div>
@@ -52,8 +52,8 @@ export default {
   data() {
     return {
       userdetails: null,
-      websites: null,
-      models: null
+      websites: [],
+      models: []
     };
   },
   methods: {

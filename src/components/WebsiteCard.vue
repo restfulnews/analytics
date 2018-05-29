@@ -1,13 +1,13 @@
 <template>
   <div>
-    <md-card md-with-hover class="websitecard">
-      <md-button class="md-dense md-primary" :href="website.route">View</md-button>
-      <iframe :src="website.route"
-        width="100%"
-        height=200px
-        class="iframe"
-      />
-    </md-card>
+    <a target="_blank" :href="website.route">
+      <md-card md-with-hover class="websitecard">
+        <iframe :src="website.route"
+          width="100%"
+          class="iframe"
+        />
+      </md-card>
+    </a>
     <br/>
   </div>
 </template>
@@ -25,6 +25,10 @@ export default {
   margin-top: 5%;
 }
 .websitecard {
-  height: 400px;
+  height: 500px;
+  margin-bottom: 20px;
+}
+.iframe {
+  height: 500px;
 }
 </style>
